@@ -1,0 +1,33 @@
+/**  Interface Styles **/
+
+.clientx-footer .navbar {
+    position: relative;
+    minHeight: 30px;
+    margin-bottom: 20px;
+    border: 1px solid transparent
+}
+
+.clientx-footer .navbar-collapse {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.clientx-footer .navbar-brand {
+    float: left;
+    height: 30px;
+    padding: 0px 0px;
+    fontSize: 10px;
+    line-height: 30px
+}
+
+.clientx-footer .navbar-nav > li > a {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 30px;
+}
+
+.clientx-footer .nav > li > a {
+    position: relative;
+    display: block;
+}
+

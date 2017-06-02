@@ -1,0 +1,5 @@
+.git
+.idea
+clientx.iml
+public/bundle.js
+node_modules

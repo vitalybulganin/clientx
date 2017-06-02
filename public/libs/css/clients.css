@@ -1,0 +1,80 @@
+/**  Interface Styles **/
+.client-heading {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+}
+
+.client-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    margin: 10px 5%;
+    font-size: 1rem;
+}
+
+.client-list .client-item {
+    border-bottom: 1px dotted gray;
+    padding-bottom: 10px;
+}
+
+.client-list .client-item:last-child {
+    border-bottom: none;
+}
+
+.client-list .client-name {
+    font-weight: 600;
+    color: #337ab7;
+    font-size: 1.2em;
+    line-height: 100%;
+}
+
+.client-list .client-info {
+    font-size: 1em;
+}
+
+.client-list .label-item {
+    font-weight: 600;
+    color: #667B82;
+}
+
+.client-list .client-delete {
+    font-size: 1.2em;
+}
+
+.client-list .client-date {
+    font-style: italic;
+}
+
+.client-list .client-mobile {
+    font-style: italic;
+}
+
+.client-list .btn {
+    height: 24px;
+    vertical-align: text-bottom;
+}
+
+.client-list .input-group {
+    width: 100%;
+    text-transform: none;
+}
+
+.client-list .client-item .client-search {
+    width: 50%;
+    text-transform: none;
+    alignment: center;
+    margin-left: 250px;
+}
+
+.client-list .a {
+    line-height: 1em;
+}
+
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px
+}
