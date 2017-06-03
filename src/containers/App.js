@@ -9,7 +9,7 @@ export default class App extends Component
 {
     static path = '/';
 
-    static PropTypes = {
+    static propTypes = {
         children: PropTypes.any.isRequired
     };
 
