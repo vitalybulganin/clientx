@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Table} from 'react-bootstrap';
 
-import RateForm from './forms/rate-form.jsx';
+import RateForm from './form/rate-form.jsx';
 
 const data = [
     {
@@ -24,25 +24,22 @@ const data = [
     }
 ];
 
-class Rates extends Component
+export default class RatesPage extends Component
 {
     static path = '/rates';
 
-    state = {
-        showForm: false,
-        selectedItem: []
-    };
-
-    constructor(props, context)
+    constructor(props)
     {
-        super(props, context);
+        super(props);
 
-        this.close = this.close.bind(this);
+        this.state = {
+            showForm: false,
+            selectedItem: []
+        };
+
         this.onEditItem = this.onEditItem.bind(this);
         this.onDeleteItem = this.onEditItem.bind(this);
     }
-
-    close() { this.setState({showForm: false, selectItem: []}); }
 
     onEditItem()
     {
@@ -56,11 +53,11 @@ class Rates extends Component
 
     render()
     {
-        var items= data || [];
-        var formTitle = (this.state.selectedItem !== null) ? 'Редактирование ставки' : 'Создание новой ставки';
+        const items= data || [];
+        let formTitle = (this.state.selectedItem !== null) ? 'Редактирование ставки' : 'Создание новой ставки';
 
         return (
-            <div className="clientx-rate">
+            <div className='clientx-rate'>
                 <h1 style={{textAlign: 'center'}}>Список ставок</h1>
                 <Table responsive striped bordered hover>
                     <thead>
@@ -73,7 +70,7 @@ class Rates extends Component
                         <th style={{width: '100px', textAlign: 'center'}}>Выходные</th>
                         <th>Комментарий</th>
                         <th style={{width: '100px', textAlign: 'center'}}>
-                            <Button className="add" bsSize="xsmall" bsStyle="success" style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: []})}}/>
+                            <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: []})}}/>
                         </th>
                     </tr>
                     </thead>
@@ -88,16 +85,15 @@ class Rates extends Component
                             <td style={{textAlign: 'center'}}>{item.wekeends}</td>
                             <td>{item.comment}</td>
                             <td style={{textAlign: 'center'}}>
-                                <Button className="edit" bsSize="xsmall" bsStyle="default" style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: item}, this.onEditItem)}}/>
-                                <Button className="delete" bsSize="xsmall" bsStyle="danger" style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.setState({selectedItem: item}, this.onDeleteItem)}}/>
+                                <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: item}, this.onEditItem)}}/>
+                                <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.setState({selectedItem: item}, this.onDeleteItem)}}/>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </Table>
-                <RateForm title={formTitle} showForm={this.state.showForm} rate={this.state.selectedItem} close={this.close}/>
+                <RateForm title={formTitle} showForm={this.state.showForm} rate={this.state.selectedItem} close={() => {this.setState({showForm: false, selectItem: []});}}/>
             </div>
         );
-    };
-};
-export default Rates;
+    }
+}

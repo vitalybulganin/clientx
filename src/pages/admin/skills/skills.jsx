@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Button, Table} from 'react-bootstrap';
 
-import SkillForm from './forms/skill-form.jsx';
+import SkillForm from './form/skill-form.jsx';
 
 const data = [
     {
@@ -26,25 +26,22 @@ const data = [
     },
 ];
 
-class Skills extends Component
+export default class Skills extends Component
 {
     static path = '/skills';
-
-    state = {
-        showForm: false,
-        selectedItem: []
-    }
 
     constructor(props, context)
     {
         super(props, context);
 
-        this.close = this.close.bind(this);
+        this.state = {
+            showForm: false,
+            selectedItem: []
+        };
+
         this.onEditItem = this.onEditItem.bind(this);
         this.onDeleteItem = this.onDeleteItem.bind(this);
     }
-
-    close() { this.setState({showForm: false, selectedItem: []}); }
 
     onEditItem()
     {
@@ -58,11 +55,11 @@ class Skills extends Component
 
     render()
     {
-        var items= data || [];
-        var formTitle = (this.state.selectedItem !== null) ? 'Редактирование навыка' : 'Создание нового навыка';
+        let items= data || [];
+        let formTitle = (this.state.selectedItem !== null) ? 'Редактирование навыка' : 'Создание нового навыка';
 
         return (
-            <div className="clientx-skill">
+            <div className='clientx-skill'>
                 <h1 style={{textAlign: 'center'}}>Список навыков</h1>
                 <Table responsive striped bordered hover>
                     <thead>
@@ -71,7 +68,7 @@ class Skills extends Component
                         <th style={{width: '500px'}}>Наименование</th>
                         <th>Комментарий</th>
                         <th style={{width: '70px', textAlign: 'center'}}>
-                            <Button className="add" bsSize="xsmall" bsStyle="success" style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: []})}}/>
+                            <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: []})}}/>
                         </th>
                     </tr>
                     </thead>
@@ -82,16 +79,15 @@ class Skills extends Component
                             <td>{item.name}</td>
                             <td>{item.comment}</td>
                             <td style={{textAlign: 'center'}}>
-                                <Button className="edit" bsSize="xsmall" bsStyle="default" style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: item}, this.onEditItem)}}/>
-                                <Button className="delete" bsSize="xsmall" bsStyle="danger" style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.setState({selectedItem: item}, this.onDeleteItem)}}/>
+                                <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: item}, this.onEditItem)}}/>
+                                <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.setState({selectedItem: item}, this.onDeleteItem)}}/>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </Table>
-                <SkillForm title={formTitle} showForm={this.state.showForm} skill={this.state.selectedItem} close={this.close}/>
+                <SkillForm title={formTitle} showForm={this.state.showForm} skill={this.state.selectedItem} close={() => {this.setState({showForm: false, selectedItem: []});}}/>
             </div>
         );
-    };
-};
-export default Skills;
+    }
+}
