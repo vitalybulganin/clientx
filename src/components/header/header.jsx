@@ -3,7 +3,7 @@ import {PropTypes} from 'prop-types';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {Link} from 'react-router';
 
-export default class ApplicationHeader extends Component
+export default class Header extends Component
 {
     static propTypes = {
         selectedView: PropTypes.String,

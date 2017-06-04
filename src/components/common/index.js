@@ -1,2 +1,3 @@
-export Contacts from './contacts.jsx';
-export Person from './person.jsx';
+export {Search} from './search';
+export {Contacts} from './contacts';
+export {Person} from './person';

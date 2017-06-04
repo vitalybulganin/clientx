@@ -1,30 +1,39 @@
-/**
- * Created by vitalyb on 02.05.2017.
- */
-import React, {Component} from 'react';
-import {Tabs, Tab, Modal, Grid, Row, Col, FormControl, ControlLabel, FormGroup, Panel, Button, Image, Form, Radio} from 'react-bootstrap';
+import React, {Component, PropTypes} from 'react';
+import {Tabs, Tab, Modal, FormControl, ControlLabel, FormGroup, Button, Form} from 'react-bootstrap';
 
-import Person from '../../common/person.jsx';
-import Contacts from '../../common/contacts.jsx';
+import Person from '../../../components/common/person/person.jsx';
+import Contacts from '../../../components/common/contacts/contacts.jsx';
 
 const contacts = [
     {
-        "id": "1",
-        "value": "903-010-0962",
-        "comment": ""
+        id: '1',
+        value: '903-010-0962',
+        comment: ''
     },
     {
-        "id": "2",
-        "value": "965-352-3669",
-        "comment": "не звонить"
+        id: '2',
+        value: '965-352-3669',
+        comment: 'не звонить'
     }
 ];
 
-class ClientForm extends Component
+export default class ClientForm extends Component
 {
-    constructor(props, context)
+    static propTypes = {
+        client: PropTypes.Object,
+        contacts: PropTypes.Array,
+        showClient: PropTypes.boolean
+    };
+
+    static defaultProps = {
+        client: [],
+        contacts: [],
+        showClient: false
+    };
+
+    constructor(props)
     {
-        super(props, context);
+        super(props);
 
         this.close = this.close.bind(this);
     }
@@ -33,7 +42,7 @@ class ClientForm extends Component
 
     render()
     {
-        var client = this.props.client || {};
+        const { client } = this.props || {};
 
         return (
             <div className="client-form" style={{width: '450px'}}>
@@ -74,5 +83,4 @@ class ClientForm extends Component
             </div>
         );
     };
-};
-export default ClientForm;
+}

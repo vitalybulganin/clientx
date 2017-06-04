@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import {PropTypes} from 'prop-types';
+import React, {Component, PropTypes} from 'react';
 
 import {DevTools} from '../utils';
 
-import {ApplicationHeader, ApplicationFooter, LoginForm} from '../components';
+import {Header, Footer, LoginForm} from '../components';
 
 export default class App extends Component
 {
@@ -17,7 +16,7 @@ export default class App extends Component
     {
         super(props);
 
-		this.state = {
+        this.state = {
 	        userName: 'Пользователь',
 	        selectedView: 'Представление',
 	        showLoginForm: false
@@ -43,17 +42,17 @@ export default class App extends Component
         console.log('Children', this.props.children);
 
         return (
-            <div className="app-clientx-crm">
-                <div className="app-header">
-                    <ApplicationHeader selectedView={this.state.selectedView} userName={this.state.userName} change={this.handleChangeSelect.bind(this)} openLogin={() => {this.setState({showLoginForm: true})}}/>
+            <div className='app-clientx-crm'>
+                <div className='app-header'>
+                    <Header selectedView={this.state.selectedView} userName={this.state.userName} change={this.handleChangeSelect.bind(this)} openLogin={() => {this.setState({showLoginForm: true})}}/>
                 </div>
                 {this.props.children}
-                <div className="app-footer">
-                    <ApplicationFooter/>
+                <div className='app-footer'>
+                    <Footer />
                 </div>
                 <LoginForm showForm={this.state.showLoginForm} close={() => {this.setState({showLoginForm: false})}}/>
                 { process.env.NODE_ENV !== 'production' ? <DevTools /> : null }
             </div>
         );
     }
-}; // main
+}

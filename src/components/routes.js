@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route} from 'react-router';
 
-import Home from './home.jsx';
+import Home from '../pages/home/home.jsx';
 import AdminRoutes from './admin/routes';
-import ErrorPage from './error.jsx';
+import ErrorPage from '../pages/error/error.jsx';
 
 export default
 (

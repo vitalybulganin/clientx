@@ -1,11 +1,7 @@
-/**
- * Created by vitalyb on 02.05.2017.
- */
 import React, {Component} from 'react';
-import {ButtonGroup, Button} from 'react-bootstrap';
 
-import InstructorForm from './forms/instructor-form.jsx';
-import Search from './search.jsx';
+import {InstructorForm} from './forms';
+import {Search} from '../../components/common';
 
 const data = [
     {
@@ -80,7 +76,7 @@ const data = [
     }
 ];
 
-class Instructors extends Component
+export default class InstructorsPage extends Component
 {
     static path = '/instructors';
 
@@ -92,9 +88,9 @@ class Instructors extends Component
         selectedColor: 'white'
     }
 
-    constructor(props, context)
+    constructor(props)
     {
-        super(props, context)
+        super(props);
 
         this.onLinkClick = this.onLinkClick.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
@@ -160,6 +156,5 @@ class Instructors extends Component
                 <InstructorForm client={this.state.activeClient} showClient={this.state.showClient} close={this.close}/>
             </div>
         );
-    };
-};
-export default Instructors;
+    }
+}

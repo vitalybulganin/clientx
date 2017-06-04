@@ -3,13 +3,14 @@ import {Route, IndexRoute} from 'react-router'
 // Own components
 import App from './containers/App';
 
-import {Home} from './components';
-import ComponentsRoutes from './components/routes';
+import {HomePage} from './pages';
+import PagesRoutes from './pages/routes';
 
 export default
 (
     <Route path={App.path} component={App}>
-        <IndexRoute component={Home}/>
-        {ComponentsRoutes}
+        <IndexRoute component={HomePage}/>
+
+        { PagesRoutes }
     </Route>
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
-export default class ApplicationFooter extends React.Component {
+export default class Footer extends React.Component {
 
     render()
     {
