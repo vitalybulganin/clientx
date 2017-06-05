@@ -1,82 +1,88 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormControl, ControlLabel, FormGroup, Button, Form} from 'react-bootstrap';
 
 import Person from '../../../components/common/person/person.jsx';
 import Contacts from '../../../components/common/contacts/contacts.jsx';
 
-const contacts = [
-    {
-        id: '1',
-        value: '903-010-0962',
-        comment: ''
-    },
-    {
-        id: '2',
-        value: '965-352-3669',
-        comment: 'не звонить'
-    }
-];
+// const contacts = [
+//     {
+//         id: '1',
+//         value: '903-010-0962',
+//         comment: ''
+//     },
+//     {
+//         id: '2',
+//         value: '965-352-3669',
+//         comment: 'не звонить'
+//     }
+// ];
 
 export default class ClientForm extends Component
 {
     static propTypes = {
-        client: PropTypes.Object,
-        contacts: PropTypes.Array,
-        showClient: PropTypes.boolean
+        showForm: PropTypes.bool.isRequired,
+        client: PropTypes.object,
+        contacts: PropTypes.array,
+        onSave: PropTypes.func.isRequired,
+        onClose: PropTypes.func.isRequired
     };
 
     static defaultProps = {
         client: [],
         contacts: [],
-        showClient: false
+        showForm: false
     };
 
     constructor(props)
     {
         super(props);
 
-        this.close = this.close.bind(this);
+        bindAll(this, ['onClose', 'onSave']);
     }
 
-    close() { this.props.close(); }
+    onClose() { this.props.onClose(); }
+    onSave() { this.props.onSave(); }
 
     render()
     {
-        const { client } = this.props || {};
+        const {client, showForm} = this.props;
+        const {contacts} = client;
 
         return (
-            <div className="client-form" style={{width: '450px'}}>
+            <div className='client-form' style={{width: '450px'}}>
                 <Form>
-                <Modal show={this.props.showClient} onHide={this.close}>
+                <Modal show={showForm} onHide={this.onClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>{client.lastName} {client.firstName} {client.secondName}</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Tabs id="clientTabs" defaultActiveKey={1} animation={false}>
-                            <Tab eventKey={1} title="Профайл">
+                        <Tabs id='clientTabs' defaultActiveKey={1} animation={false}>
+                            <Tab eventKey={1} title='Профайл'>
 
-                                <FormGroup bsSize="small">
+                                <FormGroup bsSize='small'>
                                     <Person client={client}/>
                                 </FormGroup>
 
-                                <FormGroup bsSize="small">
-                                    <Contacts name="Контакт" contacts={contacts}/>
+                                <FormGroup bsSize='small'>
+                                    <Contacts name='Контакт' contacts={typeof contacts !== 'undefined' ? contacts : []}/>
                                 </FormGroup>
-                                <FormGroup bsSize="small">
+                                <FormGroup bsSize='small'>
                                     <ControlLabel>Комментарий:</ControlLabel>
-                                    <FormControl type="textarea" id="comment"/>
+                                    <FormControl type='textarea' id='comment'/>
                                 </FormGroup>
                             </Tab>
-                            <Tab eventKey={2} title="Записи" disabled>
+                            <Tab eventKey={2} title='Записи' disabled>
 
                             </Tab>
                         </Tabs>
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button className="save" bsStyle="success" bsSize="xsmall">Сохранить</Button>
-                        <Button className="cross" bsSize="xsmall" onClick={this.close}>Закрыть</Button>
+                        <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+                        <Button className='cross' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
                     </Modal.Footer>
                 </Modal>
                     </Form>

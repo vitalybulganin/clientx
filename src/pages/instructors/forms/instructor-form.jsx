@@ -1,4 +1,6 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormGroup, Button, Form} from 'react-bootstrap';
 
 import {Person, Contacts} from '../../../components/common';
@@ -38,64 +40,73 @@ const rates = [
 export default class InstructorForm extends Component
 {
     static propTypes = {
-        client: PropTypes.object,
-        close: PropTypes.func,
-        showClient: PropTypes.boolean
+        instructor: PropTypes.object.isRequired,
+        onClose: PropTypes.func.isRequired,
+        showForm: PropTypes.bool
     };
 
     static defaultProps = {
-        showClient: false
+        showForm: false
     };
 
     constructor(props)
     {
         super(props);
+
+        bindAll(this, ['onClose']);
+    }
+
+    onClose()
+    {
+        this.props.onClose();
     }
 
     render()
     {
-        const client = this.props.client || {};
+        const {showForm, instructor} = this.props;
+        //<!!!> const {contacts, skills, rates} = instructor;
+        console.log('Инструктор: ', instructor);
 
         return (
             <div className='client-form' style={{width: '450px'}}>
                 <Form>
-                <Modal show={this.props.showClient} onHide={this.close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{client.lastName} {client.firstName} {client.secondName}</Modal.Title>
-                    </Modal.Header>
+                    <Modal show={showForm} onHide={this.onClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{instructor.lastName} {instructor.firstName} {instructor.secondName}</Modal.Title>
+                        </Modal.Header>
 
-                    <Modal.Body>
-                        <Tabs id='clientTabs' defaultActiveKey={1} animation={false}>
-                            <Tab eventKey={1} title='Профайл'>
+                        <Modal.Body>
+                            <Tabs id='clientTabs' defaultActiveKey={1} animation={false}>
+                                <Tab eventKey={1} title='Профайл'>
 
-                                <FormGroup bsSize='small'>
-                                    <Person client={client}/>
-                                </FormGroup>
+                                    <FormGroup bsSize='small'>
+                                        <Person client={typeof instructor !== 'undefined' ? instructor : {}}/>
+                                    </FormGroup>
 
-                                <FormGroup bsSize='small'>
-                                    <Contacts name='Контакт' contacts={contacts}/>
-                                </FormGroup>
+                                    <FormGroup bsSize='small'>
+                                        <Contacts name='Контакт' contacts={contacts}/>
+                                    </FormGroup>
 
-                                <FormGroup bsSize='small'>
-                                    <Contacts name='Навыки' contacts={skills}/>
-                                </FormGroup>
+                                    <FormGroup bsSize='small'>
+                                        <Contacts name='Навыки' contacts={skills}/>
+                                    </FormGroup>
 
-                                <FormGroup bsSize='small'>
-                                    <Contacts name='Ставки' contacts={rates}/>
-                                </FormGroup>
-                            </Tab>
-                            <Tab eventKey={2} title='Записи' disabled>
-                                <div/>
-                            </Tab>
-                        </Tabs>
-                    </Modal.Body>
+                                    <FormGroup bsSize='small'>
+                                        <Contacts name='Ставки' contacts={rates}/>
+                                    </FormGroup>
+                                </Tab>
+                                <Tab eventKey={2} title='Записи' disabled>
+                                    <div/>
+                                </Tab>
+                            </Tabs>
+                        </Modal.Body>
 
-                    <Modal.Footer>
-                        <Button className='save' bsStyle='success' bsSize='xsmall'>Сохранить</Button>
-                        <Button className='cross' bsSize='xsmall' onClick={() => {this.props.close();}}>Закрыть</Button>
-                    </Modal.Footer>
-                </Modal>
-                    </Form>
+                        <Modal.Footer>
+                            <Button className='save' bsStyle='success' bsSize='xsmall'>Сохранить</Button>
+                            <Button className='cross' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </Form>
             </div>
         );
     }

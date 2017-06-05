@@ -1,48 +1,51 @@
 import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
 import {Button, Table} from 'react-bootstrap';
 import {bindAll} from 'lodash';
 
 import {PricePlanForm} from './form';
 
+const date = new Date();
+
 const data = [
     {
-        id: '1',
+        id: 1,
         name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2017',
-        end: '',
-        count: '8',
-        duration: '90',
-        rate: '2500',
+        begin: '20.11.2016',
+        end: null,
+        count: 8,
+        duration: 90,
+        rate: 2500,
         comment: ''
     },
     {
-        id: '2',
+        id: 2,
         name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2017',
-        end: '',
-        count: '8',
-        duration: '90',
-        rate: '2500',
+        begin: '20.11.2016',
+        end: null,
+        count: 8,
+        duration: 60,
+        rate: 1500,
         comment: ''
     },
     {
-        id: '3',
+        id: 3,
         name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2017',
-        end: '',
-        count: '8',
-        duration: '90',
-        rate: '2500',
+        begin: '20.11.2016',
+        end: null,
+        count: 4,
+        duration: 120,
+        rate: 4500,
         comment: ''
     },
     {
-        id: '4',
+        id: 4,
         name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2017',
-        end: '',
-        count: '8',
-        duration: '90',
-        rate: '2500',
+        begin: '20.11.2016',
+        end: '25.04.2017',
+        count: 8,
+        duration: 90,
+        rate: 2500,
         comment: ''
     }
 ];
@@ -54,19 +57,19 @@ export default class PricePlansPage extends Component
     constructor(props)
     {
         super(props);
-        //
-        bindAll(this, ['onEditItem', 'onDeleteItem', 'onSave']);
+
+        bindAll(this, ['onEditItem', 'onDeleteItem', 'onSave', 'onClose']);
 
         this.state = {
             showForm: false,
             items: data,
-            selectedItem: []
+            selectedItem: {}
         };
     }
 
     onEditItem()
     {
-        console.debug(this.state.selectedItem, this.state.showForm);
+        console.debug('Selected price plan is', this.state.selectedItem, this.state.showForm);
     }
 
     onDeleteItem()
@@ -82,10 +85,14 @@ export default class PricePlansPage extends Component
 
     }
 
+    onClose()
+    {
+        this.setState({showForm: false, selectedItem: {}});
+    }
+
     render()
     {
         const {items, selectedItem, showForm} = this.state;
-        const title = (selectedItem !== null) ? 'Редактирование тарифного плана' : 'Создание новой тарифного плана';
 
         return (
             <div className='clientx-priceplans'>
@@ -102,7 +109,7 @@ export default class PricePlansPage extends Component
                             <th style={{width: '200px', textAlign: 'center'}}>Нормочас, руб/ч</th>
                             <th>Комментарий</th>
                             <th style={{width: '100px', textAlign: 'center'}}>
-                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: []})}}/>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: {}})}}/>
                             </th>
                         </tr>
                     </thead>
@@ -125,7 +132,7 @@ export default class PricePlansPage extends Component
                         ))}
                     </tbody>
                 </Table>
-                <PricePlanForm title={title} showForm={showForm} price={selectedItem} onSave={this.onSave} onClose={() => {this.setState({showForm: false, selectedItem: []});}}/>
+                <PricePlanForm showForm={showForm} price={selectedItem} onSave={this.onSave} onClose={this.onClose}/>
             </div>
         );
     };

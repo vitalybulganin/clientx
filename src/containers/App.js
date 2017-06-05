@@ -1,4 +1,6 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {bindAll} from 'lodash';
 
 import {DevTools} from '../utils';
 
@@ -19,38 +21,37 @@ export default class App extends Component
         this.state = {
 	        userName: 'Пользователь',
 	        selectedView: 'Представление',
-	        showLoginForm: false
+            showForm: false
 	    };
+        bindAll(this, ['onSelectedItem', 'onClose']);
     }
 
-    onSelectedItem(selectedView)
-    {
-        console.debug(selectedView);
-
-        this.state.selectedView = selectedView;
-    }
-
-    handleChangeSelect(name)
+    onSelectedItem(name)
     {
         this.setState({selectedView: name});
+    }
 
-        console.log('View type: ', this.state.selectedView);
+    onClose()
+    {
+        this.setState({showForm: false});
     }
 
     render()
     {
-        console.log('Children', this.props.children);
+        console.log('Children list: ', this.props.children);
+
+        const {selectedView, userName, showForm} = this.state;
 
         return (
             <div className='app-clientx-crm'>
                 <div className='app-header'>
-                    <Header selectedView={this.state.selectedView} userName={this.state.userName} change={this.handleChangeSelect.bind(this)} openLogin={() => {this.setState({showLoginForm: true})}}/>
+                    <Header selectedView={selectedView} userName={userName} onChange={this.onSelectedItem} onOpenLogin={() => {this.setState({showForm: true})}}/>
                 </div>
                 {this.props.children}
                 <div className='app-footer'>
                     <Footer />
                 </div>
-                <LoginForm showForm={this.state.showLoginForm} close={() => {this.setState({showLoginForm: false})}}/>
+                <LoginForm showForm={showForm} onClose={this.onClose}/>
                 { process.env.NODE_ENV !== 'production' ? <DevTools /> : null }
             </div>
         );

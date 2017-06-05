@@ -20,13 +20,19 @@ export const GET_CLIENTS = 'GET_CLIENTS';
  * 
  * @type {string}
  */
-export const ADD_CLIENTS = 'ADD_CLIENTS';
+export const EDIT_CLIENT = 'EDIT_CLIENT';
+
+/**
+ *
+ * @type {string}
+ */
+export const ADD_CLIENT = 'ADD_CLIENT';
 
 /**
  * 
  * @type {string}
  */
-export const DELETE_CLIENTS = 'DELETE_CLIENTS';
+export const DELETE_CLIENT = 'DELETE_CLIENT';
 
 /**
  *
@@ -38,13 +44,19 @@ export const GET_INSTRUCTORS = 'GET_INSTRUCTORS';
  *
  * @type {string}
  */
-export const ADD_INSTRUCTORS = 'ADD_INSTRUCTORS';
+export const EDIT_INSTRUCTOR = 'EDIT_INSTRUCTOR';
 
 /**
  *
  * @type {string}
  */
-export const DELETE_INSTRUCTORS = 'DELETE_INSTRUCTORS';
+export const ADD_INSTRUCTOR = 'ADD_INSTRUCTOR';
+
+/**
+ *
+ * @type {string}
+ */
+export const DELETE_INSTRUCTOR = 'DELETE_INSTRUCTOR';
 
 /**
  *
@@ -57,3 +69,22 @@ export const VIEW_TYPE = 'VIEW_TYPE';
  * @type {string}
  */
 export const USER_LOGGED = 'USER_LOGGED';
+
+/**
+ *
+ * @type {string}
+ */
+export const ADD_SKILL = 'ADD_SKiLL';
+
+/**
+ *
+ * @type {string}
+ */
+export const EDIT_SKILL = 'EDIT_SKiLL';
+
+
+/**
+ *
+ * @type {string}
+ */
+export const DELETE_SKILL = 'DELETE_SKiLL';

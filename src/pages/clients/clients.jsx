@@ -1,42 +1,75 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {bindAll} from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import {addClient, editClient, deleteClient} from './actions';
 import {ClientForm} from './forms';
 import {Search} from '../../components/common';
 
-export default class ClientsPage extends Component
+class ClientsPage extends Component
 {
     static path = '/clients';
 
     static propTypes = {
-        clients: PropTypes.Array
+        clients: PropTypes.object.isRequired,
+        dispatch: PropTypes.func.isRequired
     };
 
     constructor(props)
     {
         super(props);
-		
-	    this.state = {
+
+        bindAll(this, ['onLinkClick', 'onDeleteClick', 'onSave', 'onClose', 'onSearch', 'add']);
+
+        this.state = {
 	        deleteShowed: false,
-	        showClient: false,
+            showForm: false,
 	        queryText: '',
 	        selectedColor: 'white'
 	    };
-
-        this.onLinkClick = this.onLinkClick.bind(this);
-        this.onDeleteClick = this.onDeleteClick.bind(this);
-        this.close = this.close.bind(this);
-        this.onSearch = this.onSearch.bind(this);
     }
 
-    componentDidMount() { }
-    componentWillUnmount() {  }
-
-    onLinkClick() { this.setState({showClient: true}); }
+    onLinkClick() { this.setState({showForm: true}); }
     onDeleteClick() { console.debug(this.state.activeClient); }
     onSearch(value) { this.setState({queryText: value}); }
-    close() { this.setState({showClient: false}); }
+    add() { this.setState({showForm: true}); }
+    onClose() { this.setState({showForm: false}); }
+    onSave()
+    {
+        const {clients} = this.props.clients;
+        const client = {
+            id: clients.length + 1,
+            lastName: 'Петров',
+            firstName: 'Максим',
+            secondName: 'Иванович',
+            mobile: '(903) 123-12-12',
+            email: 'eee@gmail.com',
+            birthday: '20-05-2016',
+            gender: 'M',
+            contacts: [
+                {
+                    id: 1,
+                    value: '333-13-45',
+                    comment: ''
+                },
+                {
+                    id: 2,
+                    value: '555-35-55',
+                    comment: 'новая Хрень!'
+                },
+                {
+                    id: 3,
+                    value: '000-00-00',
+                    comment: ''
+                }
+            ],
+            comment: ''
+        };
+        this.props.dispatch(addClient(client));
+        this.setState({showForm: false, client: {}});
+    }
 
     render()
     {
@@ -44,11 +77,14 @@ export default class ClientsPage extends Component
         const displayDelete = {display: (this.state.deleteShowed !== false) ? 'inline-flex' : 'none'};
         const selectedItem = {'background-color': this.state.selectedColor};
         const queryText = this.state.queryText;
-        const clients = this.props.clients || [];
+
+        const {clients} = this.props.clients;
+        const {showForm, activeClient} = this.state;
 
         return (
             <div>
                 <Search onSearch={this.onSearch}/>
+                <button className='add' onClick={this.add}/>
 
                  <ul className='client-list media'>
                     {clients.map(client => (
@@ -68,19 +104,20 @@ export default class ClientsPage extends Component
                         </li>
                     ))}
                 </ul>
-                <ClientForm client={this.state.activeClient} showClient={this.state.showClient} close={this.close}/>
+                <ClientForm client={typeof activeClient !== 'undefined' ? activeClient : {}} showForm={showForm} onSave={this.onSave} onClose={this.onClose}/>
             </div>
         );
     };
 };
 
-const mapStateToProps = state => ({
-    clients: state.clients.length > 0 && state.clients.filter(client => client.firstName.includes(state.filterClients) || client.secondName.includes(state.filterClients) || client.lastName.includes(state.filterClients))
+const mapStateToProps = (state) => ({
+//    clients: state.clients.length > 0 && state.clients.filter(client => client.firstName.includes(state.filterClients) || client.secondName.includes(state.filterClients) || client.lastName.includes(state.filterClients))
+    clients: state.clients
 });
+
 const mapDispatchToProps = dispatch => bindActionCreators({
     getClients,
     addClient,
     removeClient
 }, dispatch);
-
-//<???> export default connect(mapStateToProps, mapDispatchToProps)(Clients);
+export default connect(mapStateToProps)(ClientsPage);

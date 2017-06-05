@@ -1,47 +1,57 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
+import {bindAll} from 'lodash';
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Image} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 export default class Header extends Component
 {
     static propTypes = {
-        selectedView: PropTypes.String,
-        userName: PropTypes.String,
-        change: PropTypes.Function,
-        openLogin: PropTypes.Function
+        onChange: PropTypes.func.isRequired,
+        selectedView: PropTypes.string,
+        userName: PropTypes.string,
+        onOpenLogin: PropTypes.func
     };
 
     constructor(props)
     {
         super(props);
+
+        bindAll(this, ['onChange']);
+    }
+
+    onChange(value)
+    {
+        this.props.onChange(value);
     }
 
     render()
     {
+        const {selectedView, userName} = this.props;
+
         return (
             <Navbar inverse collapseOnSelect staticTop>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <img src='./images/logo2.jpg'/>
+                        <Image src='./images/logo2.jpg' circle/>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={2} href='#'>Link</NavItem>
-                        <NavDropdown id='basic-nav-dropdown' eventKey={3} title={this.props.selectedView}>
-                            <MenuItem eventKey={2.1} selected={true} onClick={() => {this.props.change('Сегодня');}}>Сегодня</MenuItem>
-                            <MenuItem eventKey={2.2} onClick={() => {this.props.change('Завтра');}}>Завтра</MenuItem>
+                        <NavItem eventKey={2}><Link to='/'>Главная</Link></NavItem>
+                        <NavDropdown id='basic-nav-dropdown' eventKey={3} title={selectedView}>
+                            <MenuItem eventKey={2.1} selected={true} onClick={() => {this.onChange('Сегодня');}}>Сегодня</MenuItem>
+                            <MenuItem eventKey={2.2} onClick={() => {this.onChange('Завтра');}}>Завтра</MenuItem>
                             <MenuItem divider />
-                            <MenuItem eventKey={2.3} onClick={() => {this.props.change('Месяц');}}>Месяц</MenuItem>
+                            <MenuItem eventKey={2.3} onClick={() => {this.onChange('Месяц');}}>Месяц</MenuItem>
                         </NavDropdown>
                     </Nav>
                     <Nav pullRight>
-                        <NavDropdown id={3} eventKey={3} title={this.props.userName}>
+                        <NavDropdown id={3} eventKey={3} title={userName}>
                             <MenuItem eventKey={3.2}><Link to='/profile' disabled>Профиль</Link></MenuItem>
                             <MenuItem divider />
-                            <MenuItem eventKey={3.3} onClick={() => {this.props.openLogin();}}>Войти...</MenuItem>
+                            <MenuItem eventKey={3.3} onClick={() => {this.props.onOpenLogin();}}>Войти...</MenuItem>
                         </NavDropdown>
                     </Nav>
                     <Nav pullRight>

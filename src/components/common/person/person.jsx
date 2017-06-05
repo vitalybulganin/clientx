@@ -1,10 +1,12 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {bindAll} from 'lodash';
 import {FormControl, ControlLabel, FormGroup, Radio, Pane} from 'react-bootstrap';
 
 export default class Person extends Component
 {
     static propTypes = {
-        client: PropTypes.Object
+        client: PropTypes.object
     };
 
     static defaultProps = {
@@ -14,41 +16,40 @@ export default class Person extends Component
     constructor(props)
     {
         super(props);
+
+        bindAll(this, ['onChange']);
     }
 
-    render() {
-        let male = 'unchecked';
-        let female = 'unchecked';
+    onChange()
+    {
+    }
 
-        if (props.client.gender === 'M') {
-            male = 'checked';
-        }
-        if (props.client.gender === 'F') {
-            female = 'checked';
-        }
+    render()
+    {
+        const {client} = this.props;
 
         return (
             <div className='person-fields'>
                 <FormGroup bsSize='small'>
                     <FormGroup bsSize='small'>
                         <ControlLabel>Фамилия:</ControlLabel>
-                        <FormControl id='lastName' type='text' bsSize='small' defaultValue={props.client.lastName}/>
+                        <FormControl id='lastName' type='text' bsSize='small' defaultValue={client.lastName}/>
                     </FormGroup>
                     <FormGroup bsSize='small'>
                         <ControlLabel>Имя:</ControlLabel>
-                        <FormControl id='firstName' type='text' defaultValue={props.client.firstName}/>
+                        <FormControl id='firstName' type='text' defaultValue={client.firstName}/>
                     </FormGroup>
                     <FormGroup bsSize='small'>
                         <ControlLabel style={{width: '75%', paddingRight: '10px'}}>Отчество:
-                            <FormControl id='secondName' type='text' defaultValue={props.client.secondName}/>
+                            <FormControl id='secondName' type='text' defaultValue={client.secondName}/>
                         </ControlLabel>
                         <ControlLabel style={{width: '25%'}}>Дата рождения:
-                            <FormControl id='birthday' type='text' defaultValue={props.client.birthday}/>
+                            <FormControl id='birthday' type='text' defaultValue={client.birthday}/>
                         </ControlLabel>
                     </FormGroup>
                     <FormGroup bsSize='small'>
-                        <Radio id='radioMale' name='radioGroup' style={{checked: 'true'}} inline>Мужской</Radio>
-                        <Radio id='radioFemale' name='radioGroup' inline>Женский</Radio>
+                        {client.gender === 'M' ? <Radio id='radioMale' name='radioGroup' onChange={this.onChange} checked inline>Мужской</Radio> : <Radio id='radioMale' name='radioGroup' onChange={this.onChange} inline>Мужской</Radio>}
+                        {client.gender === 'F' ? <Radio id='radioFemale' name='radioGroup' onChange={this.onChange} checked inline>Женский</Radio> : <Radio id='radioFemale' name='radioGroup' onChange={this.onChange} inline>Женский</Radio>}
                     </FormGroup>
                 </FormGroup>
             </div>

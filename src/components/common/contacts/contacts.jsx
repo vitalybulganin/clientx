@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/lib/Table';
  */
 var contact = function({...props})
 {
-    var contacts= props.contacts || [];
+    const contacts = props.contacts || [];
 
     return (
         <div className="contact">
@@ -25,7 +25,7 @@ var contact = function({...props})
                     </tr>
                 </thead>
                 <tbody>
-                    {contacts.map(item => (
+                    {contacts.map((item) => (
                         <tr key={item.id}>
                             <td>{item.value}</td>
                             <td>{item.comment}</td>

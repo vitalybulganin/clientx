@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
 import classnames from 'classnames';
 import {bindAll} from 'lodash';
 
@@ -31,11 +32,11 @@ export default class Input extends Component
     render()
     {
         const divClasses = classnames({
-            'formgroup': true,
+            'form-group': true,
             'has-error': this.props.error ? true : false
         });
         const {value, error} = this.props;
-        console.log('error', error);
+        console.log('value', value);
 
         return (
             <div className={divClasses}>
