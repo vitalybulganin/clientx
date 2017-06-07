@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
+import {connect} from 'react-redux';
 
 import {DevTools} from '../utils';
 
 import {Header, Footer, LoginForm} from '../components';
 
-export default class App extends Component
+class App extends Component
 {
     static path = '/';
 
@@ -57,3 +58,12 @@ export default class App extends Component
         );
     }
 }
+const mapStateToProps = (state) => ({
+    clients: state.clients
+});
+const mapDispatchToProps = dispatch => bindActionCreators({
+    getClients,
+    addClient,
+    removeClient
+}, dispatch);
+export default connect(mapStateToProps)(App);

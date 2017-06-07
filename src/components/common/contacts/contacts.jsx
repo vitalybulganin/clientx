@@ -1,43 +1,52 @@
-/**
- * Created by vitalyb on 11.05.2017.
- */
 import React from 'react';
+import {PropTypes} from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import Table from 'react-bootstrap/lib/Table';
 
-/**
- *
- */
-var contact = function({...props})
+export default class Contact extends React.Component
 {
-    const contacts = props.contacts || [];
+    static propTypes = {
+        name: PropTypes.string.isRequired,
+        contacts: PropTypes.array.isRequired,
+        onOpenContact: PropTypes.func.isRequired,
+        onDeleteContact: PropTypes.func.isRequired
+    };
 
-    return (
-        <div className="contact">
-            <Table responsive striped bordered hover>
-                <thead>
-                    <tr style={{height: '14px'}}>
-                        <th>{props.name}</th>
-                        <th>Комментарий</th>
-                        <th style={{width: '15px', textAlign: 'center'}}>
-                            <Button className="add" bsSize="xsmall" bsStyle="success" style={{minWidth: '23px'}}/>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {contacts.map((item) => (
-                        <tr key={item.id}>
-                            <td>{item.value}</td>
-                            <td>{item.comment}</td>
-                            <td style={{width: '70px', textAlign: 'center'}}>
-                                <Button className="edit" bsSize="xsmall" style={{minWidth: '23px'}}/>
-                                <Button className="delete" bsSize="xsmall" bsStyle="danger" style={{minWidth: '23px', marginLeft: '5px'}}/>
-                            </td>
+    constructor(props)
+    {
+        super(props);
+    }
+
+    render()
+    {
+        const {contacts, name} = this.props;
+
+        return (
+            <div className='contact'>
+                <Table responsive striped bordered hover>
+                    <thead>
+                        <tr style={{height: '14px'}}>
+                            <th>{name}</th>
+                            <th>Комментарий</th>
+                            <th style={{width: '15px', textAlign: 'center'}}>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.onOpenContact({contact: {}})}}/>
+                            </th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </div>
-    );
-};
-export default contact;
+                    </thead>
+                    <tbody>
+                        {contacts.map((contact) => (
+                            <tr key={contact.id}>
+                                <td>{contact.value}</td>
+                                <td>{contact.comment}</td>
+                                <td style={{width: '70px', textAlign: 'center'}}>
+                                    <Button className='edit' bsSize='xsmall' style={{minWidth: '23px'}} onClick={() => {this.props.onOpenContact(contact)}}/>
+                                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.props.onDeleteContact(contact)}}/>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
+        );
+    };
+}

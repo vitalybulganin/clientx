@@ -8,6 +8,48 @@ export const ERROR = 'ERROR';
  *
  * @type {string}
  */
+export const OPEN_FORM = 'OPEN_FORM';
+
+/**
+ *
+ * @type {string}
+ */
+export const CLOSE_FORM = 'CLOSE_FORM';
+
+/**
+ *
+ * @type {string}
+ */
+export const ADD_CONTACT = 'ADD_CONTACT';
+
+/**
+ *
+ * @type {string}
+ */
+export const UPDATE_CONTACT = 'UPDATE_CONTACT';
+
+/**
+ *
+ * @type {string}
+ */
+export const DELETE_CONTACT = 'DELETE_CONTACT';
+
+/**
+ *
+ * @type {string}
+ */
+export const CLOSE_CONTACT = 'CLOSE_CONTACT';
+
+/**
+ *
+ * @type {string}
+ */
+export const OPEN_CONTACT = 'OPEN_CONTACT';
+
+/**
+ *
+ * @type {string}
+ */
 export const ERROR_IN_VERSIONAPP = 'ERROR_IN_VERSIONAPP';
 
 /**
@@ -20,7 +62,7 @@ export const GET_CLIENTS = 'GET_CLIENTS';
  * 
  * @type {string}
  */
-export const EDIT_CLIENT = 'EDIT_CLIENT';
+export const UPDATE_CLIENT = 'UPDATE_CLIENT';
 
 /**
  *
@@ -44,7 +86,7 @@ export const GET_INSTRUCTORS = 'GET_INSTRUCTORS';
  *
  * @type {string}
  */
-export const EDIT_INSTRUCTOR = 'EDIT_INSTRUCTOR';
+export const UPDATE_INSTRUCTOR = 'UPDATE_INSTRUCTOR';
 
 /**
  *
@@ -80,7 +122,7 @@ export const ADD_SKILL = 'ADD_SKiLL';
  *
  * @type {string}
  */
-export const EDIT_SKILL = 'EDIT_SKiLL';
+export const UPDATE_SKILL = 'UPDATE_SKiLL';
 
 
 /**
