@@ -1,12 +1,18 @@
 import * as types from '../../../constants/action-types';
+import {LocalStorageManager} from '../../../utils';
 
-export function getClients(clients) {
-    console.log('getClients action', clients);
+export function getClients() {
+    console.log('getClients action');
 
-    return {
-        type: types.GET_CLIENTS,
-        clients
-    };
+    const clients = LocalStorageManager.get('clients');
+
+    return (dispatch) => {dispatch({type: types.GET_CLIENTS, clients})};
+}
+
+export function saveClients(clients) {
+    console.log('saveClients action');
+
+    return (dispatch) => {dispatch({type: types.SAVE_CLIENTS, clients})};
 }
 
 export function addClient(client) {

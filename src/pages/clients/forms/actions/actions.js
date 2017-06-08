@@ -15,10 +15,10 @@ export function closeForm() {
     return {type: types.CLOSE_FORM};
 }
 
-export function addContact(contacts, contact) {
+export function addContact(contact) {
     console.log('addContact action');
 
-    return {type: types.ADD_CONTACT, contacts, contact};
+    return {type: types.ADD_CONTACT, contact};
 }
 
 export function updateContact(contact) {
@@ -33,10 +33,10 @@ export function openContact(contact) {
     return {type: types.OPEN_CONTACT, contact};
 }
 
-export function deleteContact(contacts, contact) {
+export function deleteContact(contact) {
     console.log('deleteContact action');
 
-    return {type: types.DELETE_CONTACT, contacts, contact};
+    return {type: types.DELETE_CONTACT, contact};
 }
 
 export function closeContact() {

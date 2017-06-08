@@ -6,6 +6,7 @@ const initialState = {
             showForm: false,
             contact: {}
         },
+        contacts: []
     },
     error: '',
     showForm: false
@@ -28,17 +29,23 @@ function clientFormReducer(state = initialState, action)
             return Object.assign({}, state, {contact: { showForm: true, contact: action.contact}});
 
         case types.ADD_CONTACT:
+            const contacts = state.client.contacts;
 
-            action.contact.id = (action.contact.id === -1) ? action.contacts.length + 1 : action.contact.id;
-            action.contacts.push(action.contact);
+            action.contact.id = (action.contact.id === -1) ? contacts.length + 1 : action.contact.id;
+            contacts.push(action.contact);
 
-            return Object.assign({}, state, {contact: { showForm: false, contact: action.contact}});
+            return Object.assign({}, state, {client: {contacts}, contact: { showForm: false, contact: action.contact}});
 
         case types.UPDATE_CONTACT:
             return Object.assign({}, state, {contact: { showForm: false, contact: action.contact}});
 
         case types.CLOSE_CONTACT:
             return Object.assign({}, state, {contact: { showForm: false, contact: {}}});
+
+        case types.DELETE_CONTACT:
+            const filteredContacts = state.client.contacts.filter(contact => contact.id !== action.contact.id);
+
+            return Object.assign({}, state, {client: {contacts: filteredContacts}});
 
         default:
             return state;

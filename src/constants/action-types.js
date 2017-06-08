@@ -59,6 +59,12 @@ export const ERROR_IN_VERSIONAPP = 'ERROR_IN_VERSIONAPP';
 export const GET_CLIENTS = 'GET_CLIENTS';
 
 /**
+ *
+ * @type {string}
+ */
+export const SAVE_CLIENTS = 'SAVE_CLIENTS';
+
+/**
  * 
  * @type {string}
  */

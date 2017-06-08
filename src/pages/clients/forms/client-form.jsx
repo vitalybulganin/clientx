@@ -36,17 +36,15 @@ class ClientForm extends Component
     onDeleteContact(contact)
     {
         const {client} = this.props.client;
-        const {contacts} = client || [];
 
-        this.props.dispatch(deleteContact(contacts, contact));
+        this.props.dispatch(deleteContact(contact));
     }
 
     onSaveContact(contact)
     {
         const {client} = this.props.client;
-        const {contacts} = client || [];
 
-        (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contacts, contact));
+        (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
         // Closing the contact form.
         this.props.dispatch(closeContact());
     }
