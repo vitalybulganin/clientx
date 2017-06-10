@@ -43,8 +43,8 @@ class ModalForm extends Component
                             { content }
                         </div>
                         <div className='modal-footer'>
-                            <button type='button' className='btn btn-default' onClick={ this.close }>Закрыть</button>
-                            <button type='button' className='btn btn-primary'>{ btnText }</button>
+                            <button type='button' className='save'>{ btnText }</button>
+                            <button type='button' className='cross' onClick={this.onClose}>Закрыть</button>
                         </div>
                     </div>
                 </div>

@@ -107,7 +107,7 @@ class ClientForm extends Component
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button className='cross' bsSize='xsmall' onClick={() => {this.props.dispatch(closeForm());}}>Закрыть</Button>
+                            <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(closeForm());}}>Закрыть</Button>
                             <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
                         </Modal.Footer>
                     </Modal>

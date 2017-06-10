@@ -55,8 +55,8 @@ class ContactForm extends Component
                         </Modal.Body>
 
                         <Modal.Footer>
+                            <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.onClose();}}>Закрыть</Button>
                             <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
-                            <Button className='cross' bsSize='xsmall' onClick={() => {this.props.onClose();}}>Закрыть</Button>
                         </Modal.Footer>
                     </Modal>
                 </Form>

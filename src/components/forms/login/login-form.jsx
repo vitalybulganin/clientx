@@ -55,8 +55,8 @@ export default class LoginForm extends React.Component
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button bsSize='xsmall' bsStyle='primary'>Sign In</Button>
-                        <Button bsSize='xsmall' onClick={this.onClose}>Close</Button>
+                        <Button className='cross' bsSize='xsmall' bsStyle='danger' onClick={this.onClose}>Close</Button>
+                        <Button className='save' bsSize='xsmall' bsStyle='primary'>Sign In</Button>
                     </Modal.Footer>
                 </Modal>
             </div>
