@@ -32,12 +32,12 @@ export default class Person extends Component
             <div className='person-fields'>
                 <FormGroup bsSize='small'>
                     <FormGroup bsSize='small'>
-                        <ControlLabel>Фамилия:</ControlLabel>
-                        <FormControl id='lastName' type='text' bsSize='small' defaultValue={client.lastName}/>
-                    </FormGroup>
-                    <FormGroup bsSize='small'>
-                        <ControlLabel>Имя:</ControlLabel>
-                        <FormControl id='firstName' type='text' defaultValue={client.firstName}/>
+                        <ControlLabel style={{width: '50%', paddingRight: '10px'}}>Фамилия:
+                            <FormControl id='lastName' type='text' bsSize='small' defaultValue={client.lastName}/>
+                        </ControlLabel>
+                        <ControlLabel style={{width: '50%'}}>Имя:
+                            <FormControl id='firstName' type='text' defaultValue={client.firstName}/>
+                        </ControlLabel>
                     </FormGroup>
                     <FormGroup bsSize='small'>
                         <ControlLabel style={{width: '75%', paddingRight: '10px'}}>Отчество:

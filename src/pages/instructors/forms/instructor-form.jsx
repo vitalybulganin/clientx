@@ -78,7 +78,6 @@ export default class InstructorForm extends Component
                         <Modal.Body>
                             <Tabs id='clientTabs' defaultActiveKey={1} animation={false}>
                                 <Tab eventKey={1} title='Профайл'>
-
                                     <FormGroup bsSize='small'>
                                         <Person client={typeof instructor !== 'undefined' ? instructor : {}}/>
                                     </FormGroup>

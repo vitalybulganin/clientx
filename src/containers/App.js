@@ -47,7 +47,7 @@ class App extends Component
             <div className='app-clientx-crm'>
                 <ModalForm />
                 <div className='app-header'>
-                    <Header selectedView={selectedView} userName={userName} onChange={this.onSelectedItem} onOpenLogin={() => {this.setState({showForm: true})}}/>
+                    <Header selectedView={selectedView} userName={userName} onChange={this.onSelectedItem} onOpenLogin={() => {this.setState({showForm: true});}}/>
                 </div>
                 {this.props.children}
                 <div className='app-footer'>
@@ -62,9 +62,4 @@ class App extends Component
 const mapStateToProps = (state) => ({
     clients: state.clients
 });
-const mapDispatchToProps = dispatch => bindActionCreators({
-    getClients,
-    addClient,
-    removeClient
-}, dispatch);
 export default connect(mapStateToProps)(App);

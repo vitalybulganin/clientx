@@ -15,6 +15,7 @@ import {addClient} from '../actions';
 class ClientForm extends Component
 {
     static propTypes = {
+        dispatch: PropTypes.func.isRequired,
         onSave: PropTypes.func.isRequired,
         client: PropTypes.object,
         contacts: PropTypes.array
@@ -35,15 +36,11 @@ class ClientForm extends Component
     onOpenContact(contact) { this.props.dispatch(openContact((typeof contact !== 'undefined') ? contact : {})); }
     onDeleteContact(contact)
     {
-        const {client} = this.props.client;
-
         this.props.dispatch(deleteContact(contact));
     }
 
     onSaveContact(contact)
     {
-        const {client} = this.props.client;
-
         (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
         // Closing the contact form.
         this.props.dispatch(closeContact());
@@ -110,8 +107,8 @@ class ClientForm extends Component
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
                             <Button className='cross' bsSize='xsmall' onClick={() => {this.props.dispatch(closeForm());}}>Закрыть</Button>
+                            <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
                         </Modal.Footer>
                     </Modal>
                 </Form>
