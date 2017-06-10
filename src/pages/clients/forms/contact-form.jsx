@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindAll} from 'lodash';
 import {Form, Modal, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 
+import {ModalForm} from '../../../components';
+
 class ContactForm extends Component
 {
     static propTypes = {

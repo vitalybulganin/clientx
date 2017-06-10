@@ -4,9 +4,10 @@ import {LocalStorageManager} from '../../../utils';
 export function getClients() {
     console.log('getClients action');
 
-    const clients = LocalStorageManager.get('clients');
+    let clients = LocalStorageManager.get('clients');
 
-    return (dispatch) => {dispatch({type: types.GET_CLIENTS, clients})};
+    if (typeof clients.length === 'undefined') { clients = []; }
+    return (dispatch) => {dispatch({type: types.GET_CLIENTS, clients, loaded: false})};
 }
 
 export function saveClients(clients) {

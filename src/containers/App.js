@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 import {DevTools} from '../utils';
 
-import {Header, Footer, LoginForm} from '../components';
+import {Header, Footer, LoginForm, ModalForm} from '../components';
 
 class App extends Component
 {
@@ -45,6 +45,7 @@ class App extends Component
 
         return (
             <div className='app-clientx-crm'>
+                <ModalForm />
                 <div className='app-header'>
                     <Header selectedView={selectedView} userName={userName} onChange={this.onSelectedItem} onOpenLogin={() => {this.setState({showForm: true})}}/>
                 </div>

@@ -29,8 +29,9 @@ function clientFormReducer(state = initialState, action)
             return Object.assign({}, state, {contact: { showForm: true, contact: action.contact}});
 
         case types.ADD_CONTACT:
-            const contacts = state.client.contacts;
+            let contacts = state.client.contacts;
 
+            if (typeof contacts === 'undefined') { contacts = []; }
             action.contact.id = (action.contact.id === -1) ? contacts.length + 1 : action.contact.id;
             contacts.push(action.contact);
 

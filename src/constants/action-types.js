@@ -20,6 +20,18 @@ export const CLOSE_FORM = 'CLOSE_FORM';
  *
  * @type {string}
  */
+export const OPEN_MODAL = 'OPEN_MODAL';
+
+/**
+ *
+ * @type {string}
+ */
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+
+/**
+ *
+ * @type {string}
+ */
 export const ADD_CONTACT = 'ADD_CONTACT';
 
 /**

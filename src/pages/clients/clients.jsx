@@ -74,6 +74,8 @@ class ClientsPage extends Component
 
     onSave(client)
     {
+        console.log('Saving the client', client);
+
         (client.id === -1) ? this.props.dispatch(addClient(client)) : this.props.dispatch(updateClient(client));
         // Closing the form.
         this.props.dispatch(closeForm());
@@ -83,7 +85,7 @@ class ClientsPage extends Component
     {
         const selectedItem = {'background-color': this.state.selectedColor};
         const queryText = this.state.queryText;
-        const {clients} = this.props.clients;
+        const {clients, loaded} = this.props.clients;
 
         return (
             <div>
@@ -92,17 +94,16 @@ class ClientsPage extends Component
 
                  <ul className='client-list media'>
                     {
-                        clients.length === 0 ? <Loader /> : clients.map(this.renderClient)
+                        (loaded !== true) ? <Loader /> : (clients.length !== 0) ? clients.map(this.renderClient) : null
                     }
                 </ul>
                 <ClientForm onSave={this.onSave}/>
             </div>
         );
     };
-};
+}
 
 const mapStateToProps = (state) => ({
-//<!!!> clients: state.clients.length > 0 && state.clients.filter((client) => client.firstName.includes(state.filterClients) || client.secondName.includes(state.filterClients) || client.lastName.includes(state.filterClients))
     clients: state.clients
 });
 

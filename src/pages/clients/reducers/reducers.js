@@ -3,7 +3,8 @@ import {LocalStorageManager} from '../../../utils';
 
 const initialState = {
     clients: [],
-    error: ''
+    error: '',
+    loaded: false
 };
 
 function clientsReducer(state = initialState, action)
@@ -11,7 +12,7 @@ function clientsReducer(state = initialState, action)
     switch (action.type)
     {
         case types.GET_CLIENTS:
-            return Object.assign({}, state, {clients: action.clients});
+            return Object.assign({}, state, {clients: action.clients, loaded: true});
 
         case types.SAVE_CLIENTS:
             LocalStorageManager.set('clients', action.clients);
@@ -19,9 +20,8 @@ function clientsReducer(state = initialState, action)
             return state;
 
         case types.ADD_CLIENT:
-            const clients = state.clients;
             const client = {
-                id: clients.length + 1,
+                id: state.clients.length + 1,
                 lastName: action.client.lastName,
                 firstName: action.client.firstName,
                 secondName: action.client.secondName,
@@ -32,11 +32,11 @@ function clientsReducer(state = initialState, action)
                 contacts: [],
                 comment: action.client.comment
             };
-            action.client.contacts.map((contact, idx) => {client.contacts.push(contact)});
+            action.client.contacts.map((contact) => {client.contacts.push(contact)});
+            // Adding a new client.
+            state.clients.push(client);
 
-            clients.push(client);
-
-            return Object.assign({}, state, {clients, showForm: true});
+            return Object.assign({}, state, {clients: state.clients, showForm: true});
 
         case types.UPDATE_CLIENT:
             const clientIndex = state.clients.findIndex((client) => {client.id === action.client.id});
