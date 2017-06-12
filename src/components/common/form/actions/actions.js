@@ -2,11 +2,12 @@ import * as types from '../../../../constants/action-types';
 
 export function openModal(options)
 {
-    const { title, btnText, content } = options;
+    const { title, content } = options;
 
     return {
-        type: OPEN_MODAL,
-        title, btnText, content
+        type: types.OPEN_MODAL,
+        title,
+        content
     };
 }
 

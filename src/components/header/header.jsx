@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Image} from 'react-bootstrap';
 import {Link} from 'react-router';
+import {Search} from '../common';
 
-export default class Header extends Component
+class Header extends Component
 {
     static propTypes = {
+        dispatch: PropTypes.func.isRequired,
         onChange: PropTypes.func.isRequired,
         selectedView: PropTypes.string,
         userName: PropTypes.string,
@@ -17,12 +20,17 @@ export default class Header extends Component
     {
         super(props);
 
-        bindAll(this, ['onChange']);
+        bindAll(this, ['onChange', 'onSearch']);
     }
 
     onChange(value)
     {
         this.props.onChange(value);
+    }
+
+    onSearch(value)
+    {
+        this.props.onSearch(value);
     }
 
     render()
@@ -47,6 +55,9 @@ export default class Header extends Component
                             <MenuItem eventKey={2.3} onClick={() => {this.onChange('Месяц');}}>Месяц</MenuItem>
                         </NavDropdown>
                     </Nav>
+                    <Nav>
+                        <Search onSearch={this.onSearch} style={{width: '200px'}}/>
+                    </Nav>
                     <Nav pullRight>
                         <NavDropdown id={3} eventKey={3} title={userName}>
                             <MenuItem eventKey={3.2}><Link to='/profile' disabled>Профиль</Link></MenuItem>
@@ -65,8 +76,16 @@ export default class Header extends Component
                             <MenuItem eventKey={4.2}><Link to='/clients'>Список клиентов</Link></MenuItem>
                         </NavDropdown>
                     </Nav>
+                    <Nav pullRight>
+                        <NavItem eventKey={2}>Добавить клиента</NavItem>
+                    </Nav>
                 </Navbar.Collapse>
             </Navbar>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+
+};
+export default connect(mapStateToProps)(Header);

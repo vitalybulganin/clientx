@@ -5,7 +5,8 @@ import {connect} from 'react-redux';
 
 import {DevTools} from '../utils';
 
-import {Header, Footer, LoginForm, ModalForm} from '../components';
+import {Header, Footer, ModalForm, LoginForm} from '../components';
+import {openModal} from '../components';
 
 class App extends Component
 {
@@ -21,15 +22,28 @@ class App extends Component
 
         this.state = {
 	        userName: 'Пользователь',
-	        selectedView: 'Представление',
-            showForm: false
+	        selectedView: 'Представление'
 	    };
-        bindAll(this, ['onSelectedItem', 'onClose']);
+        bindAll(this, ['onSelectedItem', 'onClose', 'onOpenLogin', 'onSearch']);
     }
 
     onSelectedItem(name)
     {
         this.setState({selectedView: name});
+    }
+
+    onOpenLogin()
+    {
+        const options = {
+            title: 'Авторизация',
+            content: <LoginForm />
+        };
+        this.props.dispatch(openModal(options));
+    }
+
+    onSearch(value)
+    {
+        this.props.dispatch(findItem({search: value}));
     }
 
     onClose()
@@ -41,19 +55,18 @@ class App extends Component
     {
         console.log('Children list: ', this.props.children);
 
-        const {selectedView, userName, showForm} = this.state;
+        const {selectedView, userName} = this.state;
 
         return (
             <div className='app-clientx-crm'>
-                <ModalForm />
                 <div className='app-header'>
-                    <Header selectedView={selectedView} userName={userName} onChange={this.onSelectedItem} onOpenLogin={() => {this.setState({showForm: true});}}/>
+                    <Header selectedView={selectedView} userName={userName} onChange={this.onSelectedItem} onOpenLogin={this.onOpenLogin} onSearch={this.onSearch}/>
                 </div>
                 {this.props.children}
                 <div className='app-footer'>
                     <Footer />
                 </div>
-                <LoginForm showForm={showForm} onClose={this.onClose}/>
+                <ModalForm />
                 { process.env.NODE_ENV !== 'production' ? <DevTools /> : null }
             </div>
         );

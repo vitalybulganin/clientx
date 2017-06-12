@@ -29,7 +29,7 @@ export default class Contact extends React.Component
                             <th>{name}</th>
                             <th>Комментарий</th>
                             <th style={{width: '15px', textAlign: 'center'}}>
-                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.onOpenContact({contact: {}})}}/>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.onOpenContact();}}/>
                             </th>
                         </tr>
                     </thead>
@@ -39,8 +39,8 @@ export default class Contact extends React.Component
                                 <td>{contact.value}</td>
                                 <td>{contact.comment}</td>
                                 <td style={{width: '70px', textAlign: 'center'}}>
-                                    <Button className='edit' bsSize='xsmall' style={{minWidth: '23px'}} onClick={() => {this.props.onOpenContact(contact)}}/>
-                                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.props.onDeleteContact(contact)}}/>
+                                    <Button className='edit' bsSize='xsmall' style={{minWidth: '23px'}} onClick={() => {this.props.onOpenContact(contact);}}/>
+                                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.props.onDeleteContact(contact);}}/>
                                 </td>
                             </tr>
                         ))}
@@ -48,5 +48,5 @@ export default class Contact extends React.Component
                 </Table>
             </div>
         );
-    };
+    }
 }

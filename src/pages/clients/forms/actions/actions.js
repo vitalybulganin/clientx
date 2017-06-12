@@ -1,4 +1,4 @@
-import * as types from '../../../../constants/action-types';
+import * as types from '../constants/types';
 
 export function openForm(client) {
     console.log('openForm action', client);
@@ -16,13 +16,13 @@ export function closeForm() {
 }
 
 export function addContact(contact) {
-    console.log('addContact action');
+    console.log('addContact action', contact);
 
     return {type: types.ADD_CONTACT, contact};
 }
 
 export function updateContact(contact) {
-    console.log('updateContact action');
+    console.log('updateContact action', contact);
 
     return {type: types.UPDATE_CONTACT, contact};
 }

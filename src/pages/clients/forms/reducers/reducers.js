@@ -1,19 +1,30 @@
-import * as types from '../../../../constants/action-types';
+import * as types from '../constants/types';
 
 const initialState = {
     client: {
-        contact: {
-            showForm: false,
-            contact: {}
-        },
+        id: -1,
+        lastName: '',
+        firstName: '',
+        secondName: '',
+        birthday: '',
+        gender: '',
+        comment: '',
         contacts: []
     },
     error: '',
-    showForm: false
+    showForm: false,
+    contact: {
+        id: -1,
+        type: 0,
+        value: '',
+        comment: ''
+    }
 };
 
 function clientFormReducer(state = initialState, action)
 {
+    console.log('Action', action);
+
     switch (action.type)
     {
         case types.OPEN_FORM:
@@ -23,25 +34,21 @@ function clientFormReducer(state = initialState, action)
             return Object.assign({}, state, {error, client: action.client, showForm: true});
 
         case types.CLOSE_FORM:
-            return Object.assign({}, state, {client: {}, showForm: false});
-
-        case types.OPEN_CONTACT:
-            return Object.assign({}, state, {contact: { showForm: true, contact: action.contact}});
+            return Object.assign({}, state, {showForm: false});
 
         case types.ADD_CONTACT:
-            let contacts = state.client.contacts;
+            const {client} = state;
 
-            if (typeof contacts === 'undefined') { contacts = []; }
-            action.contact.id = (action.contact.id === -1) ? contacts.length + 1 : action.contact.id;
-            contacts.push(action.contact);
+            action.contact.id = (action.contact.id === -1) ? client.contacts.length + 1 : action.contact.id;
+            client.contacts.push(action.contact);
 
-            return Object.assign({}, state, {client: {contacts}, contact: { showForm: false, contact: action.contact}});
+            return Object.assign({}, state, {client, contact: {}});
 
         case types.UPDATE_CONTACT:
-            return Object.assign({}, state, {contact: { showForm: false, contact: action.contact}});
+            return Object.assign({}, state, {contact: action.contact, contact: {}});
 
         case types.CLOSE_CONTACT:
-            return Object.assign({}, state, {contact: { showForm: false, contact: {}}});
+            return Object.assign({}, state, {contact: {}});
 
         case types.DELETE_CONTACT:
             const filteredContacts = state.client.contacts.filter(contact => contact.id !== action.contact.id);
@@ -54,7 +61,7 @@ function clientFormReducer(state = initialState, action)
 }
 
 const ClientFormReducer = {
-    client: clientFormReducer
+    form: clientFormReducer
 };
 
 export default ClientFormReducer;

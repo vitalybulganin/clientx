@@ -2,16 +2,13 @@ import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {Button} from 'react-bootstrap';
 
-import {LocalStorageManager} from '../../utils';
+import {getClients, saveClients, addClient, updateClient, deleteClient, findClient} from './actions';
+import {openForm, closeForm, ClientForm} from './forms';
+import {Loader, Search} from '../../components/common';
 
-import {getClients, saveClients, addClient, updateClient, deleteClient} from './actions';
-import {openForm, closeForm} from './forms/actions';
-
-import {Loader} from '../../components/common';
-import {ClientForm} from './forms';
-import {Search} from '../../components/common';
+import './clients.less';
 
 class ClientsPage extends Component
 {
@@ -22,6 +19,19 @@ class ClientsPage extends Component
         dispatch: PropTypes.func.isRequired
     };
 
+    static defaultProps = {
+        client: {
+            id: -1,
+            lastName: '',
+            firstName: '',
+            secondName: '',
+            birthday: '',
+            gender: '',
+            comment: '',
+            contacts: []
+        }
+    };
+
     constructor(props)
     {
         super(props);
@@ -29,7 +39,7 @@ class ClientsPage extends Component
         bindAll(this, ['onSave', 'onSearch', 'renderClient']);
 
         this.state = {
-	        deleteShowed: false,
+	        deleteShowed: true,
 	        queryText: '',
 	        selectedColor: 'white'
 	    };
@@ -42,35 +52,16 @@ class ClientsPage extends Component
 
     componentWillUnmount()
     {
-        const {clients} = this.props.clients;
+        const {clients} = this.props.pages;
 
         this.props.dispatch(saveClients(clients));
     }
 
-    renderClient(client)
+    onSearch(value)
     {
-        const displayCursor = {cursor: 'pointer'};
-        const displayDelete = {display: (this.state.deleteShowed !== false) ? 'inline-flex' : 'none'};
-
-        return (
-            <li className='client-item media' key={client.id}>
-                <div className='client-info media-body'>
-                    <div className='client-head'>
-                        <button className='delete btn-danger' onClick={() => {this.props.dispatch(deleteClient(client.id))}} style={displayDelete}>X</button>
-                        <span className='client-name'><a style={displayCursor} onClick={() => {this.props.dispatch(openForm(client));}}>{client.lastName} {client.firstName} {client.secondName}</a></span>
-                        <span className='client-mobile pull-right'>{client.mobile}</span>
-                    </div>
-                    <div className='client-date'>
-                        <span className='label-item'>Дата рождения: </span>
-                        {client.birthday}
-                        <span className='client-mobile pull-right'>{client.email}</span>
-                    </div>
-                </div>
-            </li>
-        );
+        this.props.dispatch(getClients());
+        this.props.dispatch(findClient(value));
     }
-
-    onSearch(value) { this.setState({queryText: value}); }
 
     onSave(client)
     {
@@ -79,18 +70,61 @@ class ClientsPage extends Component
         (client.id === -1) ? this.props.dispatch(addClient(client)) : this.props.dispatch(updateClient(client));
         // Closing the form.
         this.props.dispatch(closeForm());
+        this.componentWillUnmount();
+    }
+
+    renderClient(client)
+    {
+        const displayCursor = {cursor: 'pointer'};
+        const displayDelete = {display: (this.state.deleteShowed !== false) ? 'inline-flex' : 'none', marginTop: '2px'};
+        const mobiles = [];
+        const emails = [];
+
+        client.contacts.forEach(function(contact) {
+            if (contact.type === 'Мобильный')
+            {
+                mobiles.push(contact.value);
+            }
+            else if (contact.type === 'Почта')
+            {
+                emails.push(contact.value);
+            }
+        });
+
+        return (
+            <li className='client-item' key={client.id}>
+                <div className='client-info'>
+                    <div className='client-head'>
+                        <Button className='delete pull-right' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(deleteClient(client));}} style={displayDelete}/>
+                        <span className='client-name'><a style={displayCursor} onClick={() => {this.props.dispatch(openForm(client));}}>{client.lastName} {client.firstName} {client.secondName}</a></span>
+                        {
+                            mobiles.map((mobile, index) => (
+                                <span key={index} className='client-mobile pull-right' style={{paddingRight: '20px'}}><b>{mobile}</b></span>
+                            ))
+                        }
+                    </div>
+                    <div className='client-date'>
+                        <span className='label-item'>Дата рождения: {client.birthday}</span>
+                        {
+                            emails.map((email, index) => (
+                                <span key={index} className='client-mobile pull-right' style={{paddingRight: '20px'}}>{email}</span>
+                            ))
+                        }
+                    </div>
+                </div>
+            </li>
+        );
     }
 
     render()
     {
-        const selectedItem = {'background-color': this.state.selectedColor};
-        const queryText = this.state.queryText;
         const {clients, loaded} = this.props.clients;
+        const {client} = ClientsPage.defaultProps;
 
         return (
             <div>
                 <Search onSearch={this.onSearch}/>
-                <button className='add' onClick={() => {this.props.dispatch(openForm({client: {}}));}}/>
+                <Button className='add' onClick={() => {this.props.dispatch(openForm(client));}}/>
 
                  <ul className='client-list media'>
                     {
@@ -106,10 +140,4 @@ class ClientsPage extends Component
 const mapStateToProps = (state) => ({
     clients: state.clients
 });
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-    getClients,
-    addClient,
-    removeClient
-}, dispatch);
 export default connect(mapStateToProps)(ClientsPage);

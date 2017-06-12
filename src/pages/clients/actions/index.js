@@ -1,1 +1,1 @@
-export {getClients, saveClients, addClient, updateClient, deleteClient} from './actions';
+export {getClients, saveClients, addClient, updateClient, deleteClient, findClient} from './actions';
