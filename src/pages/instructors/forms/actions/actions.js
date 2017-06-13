@@ -1,18 +1,18 @@
 import * as types from '../constants/types';
 
-export function openForm(instructor) {
-    console.log('openForm action', instructor);
+export function openInstructorForm(instructor) {
+    console.log('openInstructorForm action', instructor);
 
     return {
-        type: types.OPEN_FORM,
+        type: types.OPEN_INSTRUCTOR_FORM,
         instructor
     };
 }
 
-export function closeForm() {
-    console.log('closeForm action');
+export function closeInstructorForm() {
+    console.log('closeInstructorForm action');
 
-    return {type: types.CLOSE_FORM};
+    return {type: types.CLOSE_INSTRUCTOR_FORM};
 }
 
 export function addContact(contact) {

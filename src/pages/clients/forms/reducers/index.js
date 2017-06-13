@@ -1,1 +1,1 @@
-export ClientFormReducer from './reducers';
+export {ClientFormReducer} from './reducers';

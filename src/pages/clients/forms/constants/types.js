@@ -2,13 +2,13 @@
  *
  * @type {string}
  */
-export const OPEN_FORM = 'OPEN_FORM';
+export const OPEN_CLIENT_FORM = 'OPEN_CLIENT_FORM';
 
 /**
  *
  * @type {string}
  */
-export const CLOSE_FORM = 'CLOSE_FORM';
+export const CLOSE_CLIENT_FORM = 'CLOSE_CLIENT_FORM';
 
 /**
  *

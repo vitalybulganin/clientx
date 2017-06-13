@@ -126,5 +126,6 @@ class ContactForm extends Component
 }
 
 const mapStateToProps = (state) => ({
+    contact: state.contact
 });
 export default connect(mapStateToProps)(ContactForm);

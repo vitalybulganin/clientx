@@ -27,13 +27,13 @@ function clientFormReducer(state = initialState, action)
 
     switch (action.type)
     {
-        case types.OPEN_FORM:
+        case types.OPEN_CLIENT_FORM:
             let error = action.error;
 
             if (action.client.lastName === '' && action.client.firstName === '') { error = 'Фамилия и имя клиента обязательные поля';  }
             return Object.assign({}, state, {error, client: action.client, showForm: true});
 
-        case types.CLOSE_FORM:
+        case types.CLOSE_CLIENT_FORM:
             return Object.assign({}, state, {showForm: false});
 
         case types.ADD_CONTACT:
@@ -60,8 +60,6 @@ function clientFormReducer(state = initialState, action)
     }
 }
 
-const ClientFormReducer = {
-    form: clientFormReducer
+export const ClientFormReducer = {
+    client: clientFormReducer
 };
-
-export default ClientFormReducer;

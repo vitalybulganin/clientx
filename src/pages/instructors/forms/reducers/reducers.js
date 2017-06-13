@@ -9,7 +9,10 @@ const initialState = {
         birthday: '',
         gender: '',
         comment: '',
-        contacts: []
+        contacts: [],
+        skills: [],
+        rates: [],
+        priceplans: []
     },
     error: '',
     showForm: false,
@@ -27,13 +30,13 @@ function instructorFormReducer(state = initialState, action)
 
     switch (action.type)
     {
-        case types.OPEN_FORM:
+        case types.OPEN_INSTRUCTOR_FORM:
             let error = action.error;
 
-            if (action.client.lastName === '' && action.client.firstName === '') { error = 'Фамилия и имя клиента обязательные поля';  }
-            return Object.assign({}, state, {error, client: action.client, showForm: true});
+            if (action.instructor.lastName === '' && action.instructor.firstName === '') { error = 'Фамилия и имя клиента обязательные поля';  }
+            return Object.assign({}, state, {error, instructor: action.instructor, showForm: true});
 
-        case types.CLOSE_FORM:
+        case types.CLOSE_INSTRUCTOR_FORM:
             return Object.assign({}, state, {showForm: false});
 
         case types.ADD_CONTACT:
@@ -60,8 +63,6 @@ function instructorFormReducer(state = initialState, action)
     }
 }
 
-const InstructorFormReducer = {
-    form: instructorFormReducer
+export const InstructorFormReducer = {
+    instructor: instructorFormReducer
 };
-
-export default InstructorFormReducer;

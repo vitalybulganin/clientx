@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
 
 import {getClients, saveClients, addClient, updateClient, deleteClient, findClient} from './actions';
-import {openForm, closeForm, ClientForm} from './forms';
+import {openClientForm, closeClientForm, ClientForm} from './forms';
 import {Loader, Search} from '../../components/common';
 
 import './clients.less';
@@ -52,7 +52,7 @@ class ClientsPage extends Component
 
     componentWillUnmount()
     {
-        const {clients} = this.props.pages;
+        const {clients} = this.props.clients;
 
         this.props.dispatch(saveClients(clients));
     }
@@ -69,7 +69,7 @@ class ClientsPage extends Component
 
         (client.id === -1) ? this.props.dispatch(addClient(client)) : this.props.dispatch(updateClient(client));
         // Closing the form.
-        this.props.dispatch(closeForm());
+        this.props.dispatch(closeClientForm());
         this.componentWillUnmount();
     }
 
@@ -96,7 +96,7 @@ class ClientsPage extends Component
                 <div className='client-info'>
                     <div className='client-head'>
                         <Button className='delete pull-right' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(deleteClient(client));}} style={displayDelete}/>
-                        <span className='client-name'><a style={displayCursor} onClick={() => {this.props.dispatch(openForm(client));}}>{client.lastName} {client.firstName} {client.secondName}</a></span>
+                        <span className='client-name'><a style={displayCursor} onClick={() => {this.props.dispatch(openClientForm(client));}}>{client.lastName} {client.firstName} {client.secondName}</a></span>
                         {
                             mobiles.map((mobile, index) => (
                                 <span key={index} className='client-mobile pull-right' style={{paddingRight: '20px'}}><b>{mobile}</b></span>
@@ -124,7 +124,7 @@ class ClientsPage extends Component
         return (
             <div>
                 <Search onSearch={this.onSearch}/>
-                <Button className='add' onClick={() => {this.props.dispatch(openForm(client));}}/>
+                <Button className='add' onClick={() => {this.props.dispatch(openClientForm(client));}}/>
 
                  <ul className='client-list media'>
                     {

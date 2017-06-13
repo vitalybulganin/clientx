@@ -1,1 +1,1 @@
-export ClientsReducer from './reducers';
+export {ClientsReducer} from './reducers';

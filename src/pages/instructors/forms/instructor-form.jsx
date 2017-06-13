@@ -1,69 +1,188 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormGroup, Button, Form} from 'react-bootstrap';
 
-import {Person, Contacts} from '../../../components/common';
+import {closeInstructorForm} from './actions';
 
-const contacts = [
-    {
-        id: '1',
-        value: '903-010-0962',
-        comment: ''
-    },
-    {
-        id: '2',
-        value: '965-352-3669',
-        comment: 'не звонить'
-    }
-];
-const skills = [
-    {
-        id: '1',
-        value: 'сноуборд',
-        comment: ''
-    },
-    {
-        id: '2',
-        value: 'горные лыжи',
-        comment: 'не люблю'
-    }
-];
-const rates = [
-    {
-        id: '1',
-        value: 'Базовая ставка',
-        comment: ''
-    }
-];
+import {ContactForm} from '../../../components/forms';
+import {Person, Contacts, Skills, Rates} from '../../../components/common';
 
-export default class InstructorForm extends Component
+class InstructorForm extends Component
 {
     static propTypes = {
+        dispatch: PropTypes.func.isRequired,
         instructor: PropTypes.object.isRequired,
-        onClose: PropTypes.func.isRequired,
-        showForm: PropTypes.bool
+        onSave: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-        showForm: false
+        instructor: {
+            id: -1,
+            lastName: '',
+            firstName: '',
+            secondName: '',
+            birthday: '',
+            gender: '',
+            comment: '',
+            contacts: [],
+            skills: [],
+            rates: [],
+            priceplans: []
+        }
     };
 
     constructor(props)
     {
         super(props);
 
-        bindAll(this, ['onClose']);
+        bindAll(this, [
+            'onClose',
+            'onSave',
+            'onPersonChanged',
+            'onTextChanged',
+            'onDeleteContact',
+            'onOpenContact',
+            'onSaveContact',
+            'onDeleteSkill',
+            'onOpenSkill',
+            'onSaveSkill',
+            'onDeleteRate',
+            'onOpenRate',
+            'onSaveRate'
+        ]);
     }
 
-    onClose()
+    onOpenContact(contact)
     {
-        this.props.onClose();
+        const options = {
+            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
+            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
+        };
+        this.props.dispatch(openModal(options));
+    }
+
+    onSaveContact(contact)
+    {
+        (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
+    }
+
+    onDeleteContact(contact)
+    {
+        this.props.dispatch(deleteContact(contact));
+    }
+
+    onOpenSkill(skill)
+    {
+        const options = {
+            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
+            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
+        };
+        this.props.dispatch(openModal(options));
+    }
+
+    onSaveSkill(skill)
+    {
+        // (skill.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
+    }
+
+    onDeleteSkill(skill)
+    {
+        // this.props.dispatch(deleteContact(contact));
+    }
+
+    onOpenRate(rate)
+    {
+        const options = {
+            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
+            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
+        };
+        this.props.dispatch(openModal(options));
+    }
+
+    onSaveRate(rate)
+    {
+        // (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
+    }
+
+    onDeleteRate(rate)
+    {
+        // this.props.dispatch(deleteContact(contact));
+    }
+
+    onTextChanged(event)
+    {
+        const {id, value} = event.target;
+        const {instructor} = this.props.instructor;
+
+        switch (id)
+        {
+            case 'comment':
+                instructor.comment = value;
+                break;
+
+            default:
+                console.error('Unknown coponent id', id);
+        }
+        this.setState({form: {instructor}});
+    }
+
+    onPersonChanged(id, value)
+    {
+        const {instructor} = this.props.instructor;
+
+        switch (id)
+        {
+            case 'lastName':
+                instructor.lastName = value;
+                break;
+
+            case 'firstName':
+                instructor.firstName = value;
+                break;
+
+            case 'secondName':
+                instructor.secondName = value;
+                break;
+
+            case 'radioMale':
+                instructor.gender = 'M';
+                break;
+
+            case 'radioFemale':
+                instructor.gender = 'F';
+                break;
+
+            case 'birthday':
+                instructor.birthday = value;
+                break;
+
+            default:
+                console.error('Unknown component id', id);
+                break;
+        }
+        this.setState({instructor: {instructor}});
+    }
+
+    onClose() { this.props.dispatch(closeInstructorForm()); }
+
+    onSave()
+    {
+        const {instructor} = this.props.instructor;
+        // Saving the instructor.
+        this.props.onSave(instructor);
     }
 
     render()
     {
-        const {showForm, instructor} = this.props;
+        const {showForm} = this.props.instructor;
+        let {instructor} = this.props.instructor;
+        if (instructor === null) { instructor = InstructorForm.defaultProps.instructor; }
+        console.log('Instructor', instructor);
+        const {contacts} = instructor || [];
+        const {skills} = instructor || [];
+        const {rates} = instructor || [];
         //<!!!> const {contacts, skills, rates} = instructor;
         console.log('Инструктор: ', instructor);
 
@@ -79,19 +198,19 @@ export default class InstructorForm extends Component
                             <Tabs id='clientTabs' defaultActiveKey={1} animation={false}>
                                 <Tab eventKey={1} title='Профайл'>
                                     <FormGroup bsSize='small'>
-                                        <Person client={typeof instructor !== 'undefined' ? instructor : {}}/>
+                                        <Person client={instructor} onChange={this.onPersonChanged}/>
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <Contacts name='Контакт' contacts={contacts}/>
+                                        <Contacts name='Контакт' contacts={contacts} onOpenContact={this.onOpenContact} onDeleteContact={this.onDeleteContact} onSaveContact={this.onSaveContact}/>
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <Contacts name='Навыки' contacts={skills}/>
+                                        <Skills name='Навыки' skills={skills} onOpenSkill={this.onOpenSkill} onDeleteSkill={this.onDeleteSkill} onSaveSkill={this.onSaveSkill}/>
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <Contacts name='Ставки' contacts={rates}/>
+                                        <Rates name='Ставки' rates={rates} onOpenRate={this.onOpenRate} onDeleteRate={this.onDeleteRate} onSaveRate={this.onSaveRate}/>
                                     </FormGroup>
                                 </Tab>
                                 <Tab eventKey={2} title='Записи' disabled>
@@ -101,8 +220,8 @@ export default class InstructorForm extends Component
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button className='save' bsStyle='success' bsSize='xsmall'>Сохранить</Button>
-                            <Button className='cross' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
+                            <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
+                            <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
                         </Modal.Footer>
                     </Modal>
                 </Form>
@@ -110,3 +229,7 @@ export default class InstructorForm extends Component
         );
     }
 }
+const mapStateToProps = (state) => ({
+    instructor: state.instructor
+});
+export default connect(mapStateToProps)(InstructorForm);

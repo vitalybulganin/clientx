@@ -8,16 +8,14 @@ import {Person, Contacts, openModal} from '../../../components';
 
 import ContactForm from './contact-form.jsx';
 
-import {closeForm, updateContact, addContact, deleteContact} from './actions';
+import {closeClientForm, updateContact, addContact, deleteContact} from './actions';
 
 class ClientForm extends Component
 {
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
         onSave: PropTypes.func.isRequired,
-        form: PropTypes.object.isRequired,
-        client: PropTypes.object,
-        contacts: PropTypes.array
+        client: PropTypes.object.isRequired
     };
 
     static defaultProps = {
@@ -62,7 +60,7 @@ class ClientForm extends Component
     onTextChanged(event)
     {
         const {id, value} = event.target;
-        const {client} = this.props.form;
+        const {client} = this.props.client;
 
         switch (id)
         {
@@ -78,7 +76,7 @@ class ClientForm extends Component
 
     onPersonChanged(id, value)
     {
-        const {client} = this.props.form;
+        const {client} = this.props.client;
 
         console.log('Client changed', client);
 
@@ -112,23 +110,22 @@ class ClientForm extends Component
                 console.error('Unknown component id', id);
                 break;
         }
-        this.setState({form: {client}});
+        this.setState({client: {client}});
     }
 
-    onClose() { this.props.dispatch(closeForm()); }
+    onClose() { this.props.dispatch(closeClientForm()); }
 
     onSave()
     {
-        const {client} = this.props.form;
-        console.log('Save the client', client);
+        const {client} = this.props.client;
         // Saving the client.
         this.props.onSave(client);
     }
 
     render()
     {
-        const {showForm} = this.props.form;
-        let {client} = this.props.form;
+        const {showForm} = this.props.client;
+        let {client} = this.props.client;
         if (client === null) { client = ClientForm.defaultProps.client; }
         const {contacts} = client || [];
 
@@ -162,7 +159,7 @@ class ClientForm extends Component
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(closeForm());}}>Закрыть</Button>
+                            <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(closeClientForm());}}>Закрыть</Button>
                             <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
                         </Modal.Footer>
                     </Modal>
@@ -173,6 +170,6 @@ class ClientForm extends Component
 }
 
 const mapStateToProps = (state) => ({
-    form: state.form
+    client: state.client
 });
 export default connect(mapStateToProps)(ClientForm);

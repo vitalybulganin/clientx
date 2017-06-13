@@ -32,7 +32,7 @@ function clientsReducer(state = initialState, action)
                 contacts: [],
                 comment: action.client.comment
             };
-            action.client.contacts.map((contact) => {client.contacts.push(contact);});
+            action.client.contacts.map((contact) => {newClient.contacts.push(contact);});
             // Adding a new client.
             state.clients.push(newClient);
 

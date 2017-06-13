@@ -24,9 +24,11 @@ function instructorsReducer(state = initialState, action)
             return state;
 
         case types.ADD_INSTRUCTOR:
-            action.instructors.contacts.map((contact) => {client.contacts.push(contact)});
+            action.instructor.contacts.map((constact) => {actions.instructor.contacts.push(contact)});
+
+            action.instructor.id = state.instructors.length + 1;
             // Adding a new client.
-            state.instructor.push(client);
+            state.instructors.push(action.instructor);
 
             return Object.assign({}, state, {instructors: state.instructors});
 

@@ -1,1 +1,1 @@
-export InstructorFormReducer from './reducers';
+export {InstructorFormReducer} from './reducers';

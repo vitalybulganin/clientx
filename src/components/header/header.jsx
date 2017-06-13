@@ -56,7 +56,7 @@ class Header extends Component
                         </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Search onSearch={this.onSearch} style={{width: '200px'}}/>
+                        <Search onSearch={this.onSearch} style={{width: '250px', backgroundColor: 'black'}}/>
                     </Nav>
                     <Nav pullRight>
                         <NavDropdown id={3} eventKey={3} title={userName}>
@@ -77,7 +77,7 @@ class Header extends Component
                         </NavDropdown>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={2}>Добавить клиента</NavItem>
+                        <NavItem eventKey={2}>Добавить</NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -85,7 +85,7 @@ class Header extends Component
     }
 }
 
-const mapStateToProps = (state) => {
-
-};
+const mapStateToProps = (state) => ({
+    header: state.header
+});
 export default connect(mapStateToProps)(Header);
