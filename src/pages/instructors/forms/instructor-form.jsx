@@ -4,10 +4,11 @@ import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormGroup, Button, Form} from 'react-bootstrap';
 
-import {closeInstructorForm} from './actions';
+import {closeInstructorForm, updateContact, addContact, deleteContact} from './actions';
 
-import {ContactForm} from '../../../components/forms';
 import {Person, Contacts, Skills, Rates} from '../../../components/common';
+import {openModal} from '../../../components/common';
+import {ContactForm} from '../../../components/forms';
 
 class InstructorForm extends Component
 {
@@ -56,6 +57,8 @@ class InstructorForm extends Component
 
     onOpenContact(contact)
     {
+        console.log('Open contact', contact);
+
         const options = {
             title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
             content: <ContactForm contact={contact} onSave={this.onSaveContact}/>

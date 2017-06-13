@@ -40,23 +40,23 @@ function instructorFormReducer(state = initialState, action)
             return Object.assign({}, state, {showForm: false});
 
         case types.ADD_CONTACT:
-            const {client} = state;
+            const {instructor} = state;
 
-            action.contact.id = (action.contact.id === -1) ? client.contacts.length + 1 : action.contact.id;
-            client.contacts.push(action.contact);
+            action.contact.id = (action.contact.id === -1) ? instructor.contacts.length + 1 : action.contact.id;
+            instructor.contacts.push(action.contact);
 
-            return Object.assign({}, state, {client, contact: {}});
+            return Object.assign({}, state, {instructor, contact: {}});
 
         case types.UPDATE_CONTACT:
-            return Object.assign({}, state, {contact: action.contact, contact: {}});
+            return Object.assign({}, state, {contact: action.contact});
 
         case types.CLOSE_CONTACT:
             return Object.assign({}, state, {contact: {}});
 
         case types.DELETE_CONTACT:
-            const filteredContacts = state.client.contacts.filter(contact => contact.id !== action.contact.id);
+            const filteredContacts = state.instructor.contacts.filter(contact => contact.id !== action.contact.id);
 
-            return Object.assign({}, state, {client: {contacts: filteredContacts}});
+            return Object.assign({}, state, {instructor: {contacts: filteredContacts}});
 
         default:
             return state;

@@ -28,7 +28,7 @@ class ModalForm extends Component
     }
 
     render() {
-        const { isOpen, title, content, btnText } = this.props.modal;
+        const { isOpen, title, content } = this.props.modal;
 
         if (isOpen !== true) { return null; }
 

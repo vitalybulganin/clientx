@@ -13,6 +13,7 @@ class App extends Component
     static path = '/';
 
     static propTypes = {
+        dispatch: PropTypes.func.isRequired,
         children: PropTypes.any.isRequired
     };
 
@@ -64,7 +65,7 @@ class App extends Component
                 </div>
                 {this.props.children}
                 <div className='app-footer'>
-                    <Footer />
+                    {/* <Footer />*/}
                 </div>
                 <ModalForm />
                 { process.env.NODE_ENV !== 'production' ? <DevTools /> : null }

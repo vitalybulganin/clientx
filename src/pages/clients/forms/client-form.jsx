@@ -4,9 +4,7 @@ import {connect} from 'react-redux';
 import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormControl, ControlLabel, FormGroup, Button, Form} from 'react-bootstrap';
 
-import {Person, Contacts, openModal} from '../../../components';
-
-import ContactForm from './contact-form.jsx';
+import {Person, Contacts, openModal, ContactForm} from '../../../components';
 
 import {closeClientForm, updateContact, addContact, deleteContact} from './actions';
 

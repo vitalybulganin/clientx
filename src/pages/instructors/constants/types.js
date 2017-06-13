@@ -1,18 +1,6 @@
 /**
  *
- * @type {string}
- */
-export const OPEN_MODAL = 'OPEN_MODAL';
-
-/**
- *
- * @type {string}
- */
-export const CLOSE_MODAL = 'CLOSE_MODAL';
-
-/**
- *
- * @type {string}
+* @type {string}
  */
 export const GET_INSTRUCTORS = 'GET_INSTRUCTORS';
 

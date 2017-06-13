@@ -33,14 +33,14 @@ function instructorsReducer(state = initialState, action)
             return Object.assign({}, state, {instructors: state.instructors});
 
         case types.UPDATE_INSTRUCTOR:
-            const clientIndex = state.instructor.findIndex((instructor) => {instructor.id === action.instructor.id});
+            const clientIndex = state.instructors.findIndex((instructor) => {instructor.id === action.instructor.id});
 
             if (clientIndex !== -1)
             {
                 // Updating the client in the lit.
                 state.instructors[clientIndex] = action.instructor;
 
-                return Object.assign({}, state, {instructors: state.instructors});
+                return Object.assign({}, state, {instructors: state.instructors, instructor: action.instructor});
             }
             return state;
 

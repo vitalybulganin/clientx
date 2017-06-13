@@ -3,7 +3,7 @@ import {routerReducer} from 'react-router-redux';
 
 import {ClientsReducer, ClientFormReducer} from './pages/clients';
 import {InstructorsReducer, InstructorFormReducer} from './pages/instructors';
-import {ModalReducer, LoginReducer, HeaderReducer} from './components';
+import {ModalReducer, LoginReducer, HeaderReducer, ContactReducer} from './components';
 
 export default combineReducers({
     routing: routerReducer,

@@ -27,20 +27,8 @@ export function updateContact(contact) {
     return {type: types.UPDATE_CONTACT, contact};
 }
 
-export function openContact(contact) {
-    console.log('openContact action');
-
-    return {type: types.OPEN_CONTACT, contact};
-}
-
 export function deleteContact(contact) {
     console.log('deleteContact action');
 
     return {type: types.DELETE_CONTACT, contact};
-}
-
-export function closeContact() {
-    console.log('closeContact action');
-
-    return {type: types.CLOSE_CONTACT};
 }

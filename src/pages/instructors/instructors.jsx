@@ -94,7 +94,7 @@ class InstructorsPage extends Component
             <li className='client-item media' key={instructor.id}>
                 <div className='client-info media-body'>
                     <div className='client-head'>
-                        <button className='delete btn-danger' onClick={() => {this.props.dispatch(deleteInstructor(instructor));}} style={displayDelete}/>
+                        <Button className='delete pull-right' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(deleteInstructor(instructor));}} style={displayDelete}/>
                         <span className='client-name'><a style={displayCursor} onClick={() => {this.props.dispatch(openInstructorForm(instructor));}}>{instructor.lastName} {instructor.firstName} {instructor.secondName}</a></span>
                         {
                             mobiles.map((mobile, index) => (

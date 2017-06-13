@@ -47,9 +47,6 @@ function clientFormReducer(state = initialState, action)
         case types.UPDATE_CONTACT:
             return Object.assign({}, state, {contact: action.contact, contact: {}});
 
-        case types.CLOSE_CONTACT:
-            return Object.assign({}, state, {contact: {}});
-
         case types.DELETE_CONTACT:
             const filteredContacts = state.client.contacts.filter(contact => contact.id !== action.contact.id);
 
