@@ -39,14 +39,15 @@ function clientsReducer(state = initialState, action)
             return Object.assign({}, state, {clients: state.clients});
 
         case types.UPDATE_CLIENT:
-            const clientIndex = state.clients.findIndex((client) => {client.id === action.client.id});
+            const index = state.clients.findIndex(client => client.id === action.client.id);
 
-            if (clientIndex !== -1)
+            if (index !== -1)
             {
+                const {clients} = state;
                 // Updating the client in the lit.
-                state.clients[clientIndex] = action.client;
+                clients[index] = action.client;
 
-                return Object.assign({}, state, {clients: state.clients});
+                return Object.assign({}, state, {clients, client: action.client});
             }
             return state;
 

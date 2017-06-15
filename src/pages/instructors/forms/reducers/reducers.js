@@ -41,9 +41,13 @@ function instructorFormReducer(state = initialState, action)
 
         case types.ADD_CONTACT:
             const {instructor} = state;
-
-            action.contact.id = (action.contact.id === -1) ? instructor.contacts.length + 1 : action.contact.id;
-            instructor.contacts.push(action.contact);
+            const contact = {
+                id: instructor.contacts.length + 1,
+                type: action.contact.type,
+                value: action.contact.value,
+                comment: action.contact.comment
+            };
+            instructor.contacts.push(contact);
 
             return Object.assign({}, state, {instructor, contact: {}});
 
@@ -54,9 +58,9 @@ function instructorFormReducer(state = initialState, action)
             return Object.assign({}, state, {contact: {}});
 
         case types.DELETE_CONTACT:
-            const filteredContacts = state.instructor.contacts.filter(contact => contact.id !== action.contact.id);
+            state.instructor.contacts = state.instructor.contacts.filter(contact => contact.id !== action.contact.id);
 
-            return Object.assign({}, state, {instructor: {contacts: filteredContacts}});
+            return Object.assign({}, state, {instructor: state.instructor});
 
         default:
             return state;

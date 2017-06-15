@@ -4,7 +4,7 @@ import {LocalStorageManager} from '../../../utils';
 export function getInstructors() {
     let instructors = LocalStorageManager.get('instructors');
     console.log('getInstructors action', instructors);
-    if (typeof instructors === 'undefined' || typeof instructors === 'Object') { instructors = []; }
+    if (typeof instructors === 'undefined') { instructors = []; }
     return (dispatch) => {dispatch({type: types.GET_INSTRUCTORS, instructors, loaded: false})};
 }
 

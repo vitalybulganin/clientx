@@ -6,7 +6,7 @@ export function getClients() {
 
     let clients = LocalStorageManager.get('clients');
 
-    if (typeof clients.length === 'undefined') { clients = []; }
+    if (typeof clients === 'undefined') { clients = []; }
     return (dispatch) => {dispatch({type: types.GET_CLIENTS, clients, loaded: false})};
 }
 

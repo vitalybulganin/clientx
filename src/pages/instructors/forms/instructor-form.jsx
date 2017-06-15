@@ -79,7 +79,7 @@ class InstructorForm extends Component
     onOpenSkill(skill)
     {
         const options = {
-            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
+            title: (typeof skill !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
             content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
         };
         this.props.dispatch(openModal(options));
@@ -180,9 +180,7 @@ class InstructorForm extends Component
     render()
     {
         const {showForm} = this.props.instructor;
-        let {instructor} = this.props.instructor;
-        if (instructor === null) { instructor = InstructorForm.defaultProps.instructor; }
-        console.log('Instructor', instructor);
+        const {instructor} = this.props.instructor || InstructorForm.defaultProps.instructor;
         const {contacts} = instructor || [];
         const {skills} = instructor || [];
         const {rates} = instructor || [];
@@ -224,7 +222,11 @@ class InstructorForm extends Component
 
                         <Modal.Footer>
                             <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
-                            <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+                            {
+                                (instructor.lastName === '' || instructor.firstName === '' || instructor.contacts.length === 0)
+                                    ? <Button className='save' bsStyle='success' bsSize='xsmall' disabled onClick={this.onSave}>Сохранить</Button>
+                                    : <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+                            }
                         </Modal.Footer>
                     </Modal>
                 </Form>

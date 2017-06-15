@@ -9,8 +9,6 @@ const initialState = {
 
 function instructorsReducer(state = initialState, action)
 {
-    console.log('Action reducer', action);
-
     switch (action.type)
     {
         case types.GET_INSTRUCTORS:
@@ -24,23 +22,42 @@ function instructorsReducer(state = initialState, action)
             return state;
 
         case types.ADD_INSTRUCTOR:
-            action.instructor.contacts.map((constact) => {actions.instructor.contacts.push(contact)});
-
-            action.instructor.id = state.instructors.length + 1;
+            const instructor = {
+                id: state.instructors.length + 1,
+                lastName: action.instructor.lastName,
+                firstName: action.instructor.firstName,
+                secondName: action.instructor.secondName,
+                birthday: action.instructor.birthday,
+                gender: action.instructor.gender,
+                comment: action.instructor.comment,
+                contacts: [],
+                skills: [],
+                rates: [],
+                priceplans: []
+            };
+            instructor.contacts.map((contact) => {action.instructor.contacts.push(contact)});
+            instructor.skills.map((skill) => {action.instructor.skills.push(skill)});
+            instructor.rates.map((rate) => {action.instructor.rates.push(rate)});
+            instructor.priceplans.map((price) => {action.instructor.priceplans.push(price)});
             // Adding a new client.
-            state.instructors.push(action.instructor);
+            state.instructors.push(instructor);
 
-            return Object.assign({}, state, {instructors: state.instructors});
+            return Object.assign({}, state, {instructors: state.instructors, instructor});
 
         case types.UPDATE_INSTRUCTOR:
-            const clientIndex = state.instructors.findIndex((instructor) => {instructor.id === action.instructor.id});
+            const index = state.instructors.findIndex(instructor => instructor.id === action.instructor.id);
 
-            if (clientIndex !== -1)
+            if (index !== -1)
             {
+                const {instructors} = state;
                 // Updating the client in the lit.
-                state.instructors[clientIndex] = action.instructor;
+                instructors[index] = action.instructor;
 
-                return Object.assign({}, state, {instructors: state.instructors, instructor: action.instructor});
+                return Object.assign({}, state, {instructors, instructor: action.instructor});
+            }
+            else
+            {
+                console.log('No one instructor found by ', action.instructor.id);
             }
             return state;
 

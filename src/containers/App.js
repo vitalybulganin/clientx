@@ -74,6 +74,8 @@ class App extends Component
     }
 }
 const mapStateToProps = (state) => ({
-    clients: state.clients
+    clients: state.clients,
+    instructor: state.instructors,
+    activePage: state.activePage
 });
 export default connect(mapStateToProps)(App);

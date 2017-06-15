@@ -1,7 +1,7 @@
 const config = {
 
     localStorage: {
-        name: 'react-redux'
+        name: 'clientx'
     }
 };
 
