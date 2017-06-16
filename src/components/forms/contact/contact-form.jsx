@@ -43,14 +43,15 @@ class ContactForm extends Component
                     id: 3,
                     name: 'Почта'
                 }
-            ]
+            ],
+            contact: (props.contact !== null) ? props.contact : ContactForm.defaultProps.contact
         };
     }
 
     onTextChanged(event)
     {
         const {id, value} = event.target;
-        const {contact} = this.props;
+        const {contact} = this.state;
 
         switch (id)
         {
@@ -75,7 +76,7 @@ class ContactForm extends Component
 
     onSave()
     {
-        const {contact} = this.props;
+        const {contact} = this.state;
         // Saving the contact.
         this.props.onSave(contact);
         // Closing the form.
@@ -84,18 +85,14 @@ class ContactForm extends Component
 
     onClose()
     {
-        const {contact} = ContactForm.defaultProps;
-
+        this.setState({contact: null});
         this.props.dispatch(closeModal());
-        this.setState({contact});
     }
 
     render()
     {
-        let {contact} = this.props;
-        console.log('Selected contact', contact);
-        if (contact === null) { contact = defaultProps.contact; }
-
+        const {contact} = this.state;
+        console.log('Contact', contact);
 
         return (
             <div className='clientx-form'>

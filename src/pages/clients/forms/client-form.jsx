@@ -39,7 +39,7 @@ class ClientForm extends Component
     onOpenContact(contact)
     {
         const options = {
-            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
+            title: (typeof contact !== 'undefined' && typeof contact.id !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
             content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
         };
         this.props.dispatch(openModal(options));
@@ -149,7 +149,7 @@ class ClientForm extends Component
 
                                     <FormGroup bsSize='small'>
                                         <ControlLabel>Комментарий:</ControlLabel>
-                                        <FormControl componentClass='textarea' id='comment' defaultValue={client.comment} onChange={this.onTextChange}/>
+                                        <FormControl componentClass='textarea' id='comment' placeholder='Комментарий' defaultValue={client.comment} onChange={this.onTextChange}/>
                                     </FormGroup>
                                 </Tab>
                                 <Tab eventKey={2} title='Записи' disabled/>

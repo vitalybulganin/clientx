@@ -12,13 +12,7 @@ const initialState = {
         contacts: []
     },
     error: '',
-    showForm: false,
-    contact: {
-        id: -1,
-        type: 0,
-        value: '',
-        comment: ''
-    }
+    showForm: false
 };
 
 function clientFormReducer(state = initialState, action)
@@ -28,10 +22,7 @@ function clientFormReducer(state = initialState, action)
     switch (action.type)
     {
         case types.OPEN_CLIENT_FORM:
-            let error = action.error;
-
-            if (action.client.lastName === '' && action.client.firstName === '') { error = 'Фамилия и имя клиента обязательные поля';  }
-            return Object.assign({}, state, {error, client: action.client, showForm: true});
+            return Object.assign({}, state, {client: action.client, showForm: true});
 
         case types.CLOSE_CLIENT_FORM:
             return Object.assign({}, state, {showForm: false});

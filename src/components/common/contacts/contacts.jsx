@@ -64,7 +64,7 @@ export default class Contact extends React.Component
                             <th>Комментарий</th>
                             <th style={{width: '15px', textAlign: 'center'}}>
                                 <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}}
-                                        onClick={() => {this.props.onOpenContact(contact);}}/>
+                                        onClick={() => {this.props.onOpenContact(contact); this.setState({contact: {}});}}/>
                             </th>
                         </tr>
                     </thead>

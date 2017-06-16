@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
-import {Tabs, Tab, Modal, FormGroup, Button, Form} from 'react-bootstrap';
+import {Tabs, Tab, Modal, FormGroup, Button, Form, FormControl, ControlLabel} from 'react-bootstrap';
 
 import {closeInstructorForm, updateContact, addContact, deleteContact} from './actions';
 
@@ -57,10 +57,9 @@ class InstructorForm extends Component
 
     onOpenContact(contact)
     {
-        console.log('Open contact', contact);
 
         const options = {
-            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
+            title: (typeof contact !== 'undefined' && typeof contact.id !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
             content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
         };
         this.props.dispatch(openModal(options));
@@ -212,6 +211,11 @@ class InstructorForm extends Component
 
                                     <FormGroup bsSize='small'>
                                         <Rates name='Ставки' rates={rates} onOpenRate={this.onOpenRate} onDeleteRate={this.onDeleteRate} onSaveRate={this.onSaveRate}/>
+                                    </FormGroup>
+
+                                    <FormGroup bsSize='small'>
+                                        <ControlLabel>Комментарий:</ControlLabel>
+                                        <FormControl componentClass='textarea' id='comment' placeholder='Комментарий' defaultValue={instructor.comment} onChange={this.onTextChange}/>
                                     </FormGroup>
                                 </Tab>
                                 <Tab eventKey={2} title='Записи' disabled>

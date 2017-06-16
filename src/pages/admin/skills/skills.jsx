@@ -68,8 +68,8 @@ class SkillsPage extends Component
     render()
     {
         const {skills, loaded} = this.props.skills;
-        const {defaultSkill} = SkillsPage.defaultProps;
-
+        const {skill} = {skill: {id: -1, name: '', comment: ''}};
+        console.log('default skill', skill);
         return (
             <div className='clientx-skill'>
                 <h1 style={{textAlign: 'center'}}>Список навыков</h1>
@@ -80,7 +80,8 @@ class SkillsPage extends Component
                             <th style={{width: '500px'}}>Наименование</th>
                             <th>Комментарий</th>
                             <th style={{width: '70px', textAlign: 'center'}}>
-                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openSkillForm(defaultSkill));}}/>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}}
+                                        onClick={() => {this.props.dispatch(openSkillForm(skill));}}/>
                             </th>
                         </tr>
                     </thead>
