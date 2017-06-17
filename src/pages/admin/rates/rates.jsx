@@ -1,60 +1,85 @@
 import React, {Component} from 'react';
+import {PropTypes} from 'prop-types';
+import {connect} from 'react-redux';
+import {bindAll} from 'lodash';
 import {Button, Table} from 'react-bootstrap';
 
-import RateForm from './form/rate-form.jsx';
+import {Loader} from '../../../components/common';
+import {RateForm, openRateForm} from './forms';
+import {getRates, addRate, deleteRate, updateRate, saveRates} from './actions';
 
-const data = [
-    {
-        "id": "1",
-        "name": "Базовая ставка сноубордиста",
-        "rate": "600",
-        "students": "0",
-        "skill": "Сноуборд",
-        "wekeends": "Да",
-        "comment": ""
-    },
-    {
-        "id": "2",
-        "name": "Базовая ставка лыжника",
-        "rate": "600",
-        "students": "0",
-        "skill": "Горные лыжи",
-        "wekeends": "Да",
-        "comment": ""
-    }
-];
 
-export default class RatesPage extends Component
+class RatesPage extends Component
 {
     static path = '/rates';
+
+    static propTypes = {
+        dispatch: PropTypes.func.isRequired,
+        rates: PropTypes.array.isRequired
+    };
+
+    componentDidMount()
+    {
+        this.props.dispatch(getRates());
+    }
+
+    componentWillUnmount()
+    {
+        const {rates} = this.props.rates;
+
+        this.props.dispatch(saveRates(rates));
+    }
+
+    componentDidMount()
+    {
+        this.props.dispatch(getRates());
+    }
+
+    componentWillUnmount()
+    {
+        const {rates} = this.props.rates;
+
+        this.props.dispatch(saveRates(rates));
+    }
 
     constructor(props)
     {
         super(props);
 
-        this.state = {
-            showForm: false,
-            selectedItem: []
-        };
-
-        this.onEditItem = this.onEditItem.bind(this);
-        this.onDeleteItem = this.onEditItem.bind(this);
+        bindAll(this, ['renderRate', 'onSave']);
     }
 
-    onEditItem()
+    onSave(rate)
     {
-        console.debug(this.state.selectedItem, this.state.showForm);
+        this.props.dispatch((rate.id === -1) ? this.props.dispatch(addRate(rate)) : this.props.dispatch(updateRate(rate)));
+        // Saving the list of skills.
+        this.componentWillUnmount();
     }
 
-    onDeleteItem()
+    renderRate(rate)
     {
-        console.debug(this.state.selectedItem, this.state.showForm);
+        return (
+            <tr key={rate.id}>
+                <td style={{textAlign: 'center'}}>{rate.id}</td>
+                <td>{rate.name}</td>
+                <td style={{textAlign: 'right'}}>{rate.rate}</td>
+                <td style={{textAlign: 'right'}}>{rate.students}</td>
+                <td>{rate.skill}</td>
+                <td style={{textAlign: 'center'}}>{rate.wekeends}</td>
+                <td>{rate.comment}</td>
+                <td style={{textAlign: 'center'}}>
+                    <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openRateForm(rate));}}/>
+                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.props.dispatch(deleteRate(rate));}}/>
+                </td>
+            </tr>
+        );
     }
 
     render()
     {
-        const items= data || [];
-        let formTitle = (this.state.selectedItem !== null) ? 'Редактирование ставки' : 'Создание новой ставки';
+        const {rates, loaded} = this.props.rates;
+
+        if (loaded !== true) { return (<Loader />); }
 
         return (
             <div className='clientx-rate'>
@@ -70,30 +95,21 @@ export default class RatesPage extends Component
                             <th style={{width: '100px', textAlign: 'center'}}>Выходные</th>
                             <th>Комментарий</th>
                             <th style={{width: '100px', textAlign: 'center'}}>
-                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: []})}}/>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}}
+                                        onClick={() => {this.props.dispatch(openRateForm());}}/>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map(item => (
-                            <tr key={item.id}>
-                                <td style={{textAlign: 'center'}}>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td style={{textAlign: 'right'}}>{item.rate}</td>
-                                <td style={{textAlign: 'right'}}>{item.students}</td>
-                                <td>{item.skill}</td>
-                                <td style={{textAlign: 'center'}}>{item.wekeends}</td>
-                                <td>{item.comment}</td>
-                                <td style={{textAlign: 'center'}}>
-                                    <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: item}, this.onEditItem)}}/>
-                                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.setState({selectedItem: item}, this.onDeleteItem)}}/>
-                                </td>
-                            </tr>
-                        ))}
+                        { rates.map(this.renderRate) }
                     </tbody>
                 </Table>
-                <RateForm title={formTitle} showForm={this.state.showForm} rate={this.state.selectedItem} close={() => {this.setState({showForm: false, selectItem: []});}}/>
+                <RateForm onSave={this.onSave}/>
             </div>
         );
     }
 }
+const mapStateToProps = (state) => ({
+    rates: state.rates
+});
+export default connect(mapStateToProps)(RatesPage);

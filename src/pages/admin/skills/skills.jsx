@@ -13,7 +13,8 @@ class SkillsPage extends Component
     static path = '/skills';
 
     static propTypes = {
-        dispatch: PropTypes.func.isRequired
+        dispatch: PropTypes.func.isRequired,
+        skill: PropTypes.array.isRequired
     };
 
     static defaultProps = {
@@ -69,7 +70,9 @@ class SkillsPage extends Component
     {
         const {skills, loaded} = this.props.skills;
         const {skill} = {skill: {id: -1, name: '', comment: ''}};
-        console.log('default skill', skill);
+
+        if (loaded !== true) { return (<Loader />); }
+
         return (
             <div className='clientx-skill'>
                 <h1 style={{textAlign: 'center'}}>Список навыков</h1>
@@ -87,7 +90,7 @@ class SkillsPage extends Component
                     </thead>
                     <tbody>
                         {
-                            (loaded !== true) ? <Loader /> : (skills.length !== 0) ? skills.map(this.renderSkill) : null
+                            skills.map(this.renderSkill)
                         }
                     </tbody>
                 </Table>
