@@ -62,12 +62,12 @@ function ratesReducer(state = initialState, action)
             }
             return state;
 
-        case types.DELETE_SKILL:
+        case types.DELETE_RATE:
             const filtered = state.rates.filter(rate => rate.id !== action.rate.id);
             // Updating the skill in the list.
             return Object.assign({}, state, {rates: filtered});
 
-        case types.FIND_SKILL:
+        case types.FIND_RATE:
             return state;
 
         default:
