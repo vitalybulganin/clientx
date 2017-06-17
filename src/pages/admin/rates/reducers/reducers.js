@@ -13,35 +13,48 @@ function ratesReducer(state = initialState, action)
     switch (action.type)
     {
         case types.GET_RATES:
-            return Object.assign({}, state, {rates: action.rates, loaded: true});
+            // Getting a list of skills.
+            let skills = LocalStorageManager.get('skills');
+            // Getting a list of rates.
+            let rates = LocalStorageManager.get('rates');
 
-        case types.SAVE_SKILLS:
+            if (typeof skills === 'undefined') { skills = []; }
+            if (typeof skills.length === 'undefined') { skills = []; }
+            if (typeof rates === 'undefined') { rates = []; }
+            if (typeof rates.length === 'undefined') { rates = []; }
+            return Object.assign({}, state, {rates: rates, skills, loaded: true});
+
+        case types.SAVE_RATES:
             // Saving a list of skills.
             LocalStorageManager.set('rates', action.rates);
 
             return state;
 
-        case types.ADD_SKILL:
-            const skill = {
+        case types.ADD_RATE:
+            const rate = {
                 id: state.rates.length + 1,
                 name: action.rate.name,
-                comment: action.skill.comment
+                rate: action.rate.rate,
+                students: action.rate.students,
+                skill: action.rate.skill,
+                weekends: action.rate.weekends,
+                comment: action.rate.comment
             };
             // Adding a new skill.
-            state.rates.push(skill);
+            state.rates.push(rate);
 
-            return Object.assign({}, state, {skills: state.rates});
+            return Object.assign({}, state, {rates: state.rates});
 
-        case types.UPDATE_SKILL:
-            const skillIndex = state.rates.findIndex(rate => skill.id === action.skill.id);
+        case types.UPDATE_RATE:
+            const index = state.rates.findIndex(rate => rate.id === action.rate.id);
 
-            if (skillIndex !== -1)
+            if (index !== -1)
             {
                 const {rates} = state;
                 // Updating the skill in the list.
-                skills[skillIndex] = action.rate;
+                rates[index] = action.rate;
 
-                return Object.assign({}, state, {rates, skill: action.rate});
+                return Object.assign({}, state, {rates, rate: action.rate});
             }
             else
             {

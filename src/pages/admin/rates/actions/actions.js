@@ -1,13 +1,8 @@
 import * as types from '../constants';
-import {LocalStorageManager} from '../../../../utils';
 
 export function getRates()
 {
-    let rates = LocalStorageManager.get('rates');
-
-    if (typeof rates === 'undefined') { rates = []; }
-    if (typeof rates.length === 'undefined') { rates = []; }
-    return (dispatch) => {dispatch({type: types.GET_RATES, rates, loaded: false});};
+     return (dispatch) => {dispatch({type: types.GET_RATES, rates: [], loaded: false});};
 }
 
 export function saveRates(rates)

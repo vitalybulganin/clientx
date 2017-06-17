@@ -8,17 +8,17 @@ export function openRateForm(rate)
     };
 }
 
-export function closeSkillForm()
+export function closeRateForm()
 {
     return {
         type: types.CLOSE_RATE_FORM
     };
 }
 
-export function editSkillForm(rate)
+export function editRateForm(rate)
 {
     return {
-        type: types.RATE_RATE_FORM,
+        type: types.EDIT_RATE_FORM,
         rate
     };
 }

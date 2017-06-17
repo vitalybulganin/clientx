@@ -8,7 +8,6 @@ import {Loader} from '../../../components/common';
 import {RateForm, openRateForm} from './forms';
 import {getRates, addRate, deleteRate, updateRate, saveRates} from './actions';
 
-
 class RatesPage extends Component
 {
     static path = '/rates';
@@ -18,17 +17,9 @@ class RatesPage extends Component
         rates: PropTypes.array.isRequired
     };
 
-    componentDidMount()
-    {
-        this.props.dispatch(getRates());
-    }
-
-    componentWillUnmount()
-    {
-        const {rates} = this.props.rates;
-
-        this.props.dispatch(saveRates(rates));
-    }
+    static defaultProps = {
+        reates: []
+    };
 
     componentDidMount()
     {
@@ -51,7 +42,7 @@ class RatesPage extends Component
 
     onSave(rate)
     {
-        this.props.dispatch((rate.id === -1) ? this.props.dispatch(addRate(rate)) : this.props.dispatch(updateRate(rate)));
+        this.props.dispatch((rate.id === -1) ? addRate(rate) : updateRate(rate));
         // Saving the list of skills.
         this.componentWillUnmount();
     }
@@ -65,7 +56,7 @@ class RatesPage extends Component
                 <td style={{textAlign: 'right'}}>{rate.rate}</td>
                 <td style={{textAlign: 'right'}}>{rate.students}</td>
                 <td>{rate.skill}</td>
-                <td style={{textAlign: 'center'}}>{rate.wekeends}</td>
+                <td style={{textAlign: 'center'}}>{(Boolean(rate.weekends) !== false) ? 'Да' : 'Нет'}</td>
                 <td>{rate.comment}</td>
                 <td style={{textAlign: 'center'}}>
                     <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openRateForm(rate));}}/>

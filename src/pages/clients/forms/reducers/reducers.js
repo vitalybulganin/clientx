@@ -17,8 +17,6 @@ const initialState = {
 
 function clientFormReducer(state = initialState, action)
 {
-    console.log('Action', action);
-
     switch (action.type)
     {
         case types.OPEN_CLIENT_FORM:

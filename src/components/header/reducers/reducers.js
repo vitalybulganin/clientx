@@ -6,8 +6,6 @@ const initialState = {
 
 function headerReducer(state = initialState, action)
 {
-    console.log('Action', action);
-
     switch (action.type)
     {
         case types.FIND_ITEM:

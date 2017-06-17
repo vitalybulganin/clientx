@@ -1,98 +1,74 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-import {Button, Table} from 'react-bootstrap';
+import {connect} from 'react-redux';
 import {bindAll} from 'lodash';
+import {Button, Table} from 'react-bootstrap';
 
-import {PricePlanForm} from './form';
+import {Loader} from '../../../components/common';
 
-const date = new Date();
+import {PricePlanForm, openPriceForm} from './forms';
+import {getPrices, addPrice, updatePrice, deletePrice} from './actions';
 
-const data = [
-    {
-        id: 1,
-        name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2016',
-        end: null,
-        count: 8,
-        duration: 90,
-        rate: 2500,
-        comment: ''
-    },
-    {
-        id: 2,
-        name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2016',
-        end: null,
-        count: 8,
-        duration: 60,
-        rate: 1500,
-        comment: ''
-    },
-    {
-        id: 3,
-        name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2016',
-        end: null,
-        count: 4,
-        duration: 120,
-        rate: 4500,
-        comment: ''
-    },
-    {
-        id: 4,
-        name: 'VIP абонемент на 8 занятий в любой день',
-        begin: '20.11.2016',
-        end: '25.04.2017',
-        count: 8,
-        duration: 90,
-        rate: 2500,
-        comment: ''
-    }
-];
-
-export default class PricePlansPage extends Component
+class PricePlansPage extends Component
 {
     static path = '/priceplans';
+
+    static propTypes = {
+        dispatch: PropTypes.func.isRequired,
+        prices: PropTypes.array
+    };
+
+    componentDidMount()
+    {
+        this.props.dispatch(getPrices());
+    }
+
+    componentWillUnmount()
+    {
+        const {prices} = this.props.prices;
+
+        this.props.dispatch(savePrices(prices));
+    }
 
     constructor(props)
     {
         super(props);
 
-        bindAll(this, ['onEditItem', 'onDeleteItem', 'onSave', 'onClose']);
-
-        this.state = {
-            showForm: false,
-            items: data,
-            selectedItem: {}
-        };
-    }
-
-    onEditItem()
-    {
-        console.debug('Selected price plan is', this.state.selectedItem, this.state.showForm);
-    }
-
-    onDeleteItem()
-    {
-        console.debug(this.state.selectedItem, this.state.showForm);
+        bindAll(this, ['renderPrice', 'onSave']);
     }
 
     onSave(price)
     {
-        console.log('Price', price);
-        // Closing the form.
-        this.setState({showForm: false});
-
+        this.props.dispatch((price.id === -1) ? addPrice(price) : updatePrice(price));
+        // Saving any changes in a storage.
+        this.componentWillUnmount();
     }
 
-    onClose()
+    renderPrice(price)
     {
-        this.setState({showForm: false, selectedItem: {}});
+        return (
+            <tr key={item.id}>
+                <td style={{textAlign: 'center'}}>{item.id}</td>
+                <td>{item.name}</td>
+                <td style={{textAlign: 'center'}}>{item.begin}</td>
+                <td style={{textAlign: 'center'}}>{item.end}</td>
+                <td style={{textAlign: 'center'}}>{item.count}</td>
+                <td style={{textAlign: 'center'}}>{item.duration}</td>
+                <td style={{textAlign: 'center'}}>{item.rate}</td>
+                <td>{item.comment}</td>
+                <td style={{textAlign: 'center'}}>
+                    <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openPriceForm(price));}}/>
+                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.props.dispatch(deletePrice(price));}}/>
+                </td>
+            </tr>
+        );
     }
 
     render()
     {
-        const {items, selectedItem, showForm} = this.state;
+        const {prices, loaded} = this.props.prices;
+
+        if (loaded !== true) { return (<Loader />); }
 
         return (
             <div className='clientx-priceplans'>
@@ -109,31 +85,20 @@ export default class PricePlansPage extends Component
                             <th style={{width: '200px', textAlign: 'center'}}>Нормочас, руб/ч</th>
                             <th>Комментарий</th>
                             <th style={{width: '100px', textAlign: 'center'}}>
-                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: {}})}}/>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openPriceForm());}}/>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map(item => (
-                            <tr key={item.id}>
-                                <td style={{textAlign: 'center'}}>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td style={{textAlign: 'center'}}>{item.begin}</td>
-                                <td style={{textAlign: 'center'}}>{item.end}</td>
-                                <td style={{textAlign: 'center'}}>{item.count}</td>
-                                <td style={{textAlign: 'center'}}>{item.duration}</td>
-                                <td style={{textAlign: 'center'}}>{item.rate}</td>
-                                <td>{item.comment}</td>
-                                <td style={{textAlign: 'center'}}>
-                                    <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.setState({showForm: true, selectedItem: item}, this.onEditItem)}}/>
-                                    <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.setState({selectedItem: item}, this.onDeleteItem)}}/>
-                                </td>
-                            </tr>
-                        ))}
+                        { prices.map(this.renderPrice) }
                     </tbody>
                 </Table>
-                <PricePlanForm showForm={showForm} price={selectedItem} onSave={this.onSave} onClose={this.onClose}/>
+                <PricePlanForm onSave={this.onSave}/>
             </div>
         );
-    };
-};
+    }
+}
+const mapStateToProps = (state) => ({
+    prices: state.prices
+});
+export default connect(mapStateToProps)(PricePlansPage);

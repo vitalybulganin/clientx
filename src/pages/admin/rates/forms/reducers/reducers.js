@@ -7,7 +7,7 @@ const initialState = {
         rate: 600,
         students: 0,
         skill: '',
-        wekeends: true,
+        weekends: false,
         comment: ''
     },
     error: '',
@@ -29,7 +29,7 @@ function rateFormReducer(state = initialState, action)
             return Object.assign({}, state, {rate: {}, showForm: false});
 
         case types.EDIT_RATE_FORM:
-            return Object.assign({}, state, {rate: action.rate, showForm: false});
+            return Object.assign({}, state, {rate: action.rate});
 
         default:
             return state;

@@ -25,7 +25,7 @@ export default class Input extends Component
     onChange(event)
     {
         const {value} = event.target;
-        this.props.onChange(value);
+        this.props.onChange(event);
         this.setState({value});
     }
 
@@ -36,7 +36,6 @@ export default class Input extends Component
             'has-error': this.props.error ? true : false
         });
         const {value, error} = this.props;
-        console.log('value', value);
 
         return (
             <div className={divClasses}>

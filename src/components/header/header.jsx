@@ -81,9 +81,9 @@ class Header extends Component
                         <Nav>
                             <NavDropdown id={4} title='Администрирование'>
                                 <NavDropdown id={5} title='Справочники'>
-                                    <MenuItem eventKey={5.1}><Link to='/skills'>Справочник навыков</Link></MenuItem>
-                                    <MenuItem eventKey={5.2}><Link to='/rates'>Справочник ставок</Link></MenuItem>
-                                    <MenuItem eventKey={5.3}><Link to='/priceplans'>Справочник тарифных планов</Link></MenuItem>
+                                    <MenuItem eventKey={5.1}><Link to='/skills'>Навыки</Link></MenuItem>
+                                    <MenuItem eventKey={5.2}><Link to='/rates'>Ставки</Link></MenuItem>
+                                    <MenuItem eventKey={5.3}><Link to='/priceplans'>Тарифные планы</Link></MenuItem>
                                 </NavDropdown>
                                 <MenuItem eventKey={4.1}><Link to='/instructors'>Список инструкторов</Link></MenuItem>
                                 <MenuItem eventKey={4.2}><Link to='/clients'>Список клиентов</Link></MenuItem>

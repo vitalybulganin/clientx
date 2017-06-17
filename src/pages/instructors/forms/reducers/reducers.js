@@ -26,8 +26,6 @@ const initialState = {
 
 function instructorFormReducer(state = initialState, action)
 {
-    console.log('Action', action);
-
     switch (action.type)
     {
         case types.OPEN_INSTRUCTOR_FORM:

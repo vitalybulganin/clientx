@@ -1,1 +1,1 @@
-export {openRateForm, closeSkillForm, editSkillForm} from './actions';
+export {openRateForm, closeRateForm, editRateForm} from './actions';
