@@ -1,1 +1,1 @@
-export {openInstructorForm, closeInstructorForm, openContact, addContact, updateContact, deleteContact, closeContact} from './actions';
+export {openInstructorForm, closeInstructorForm, editInstructorForm, openContact, addContact, updateContact, deleteContact, closeContact} from './actions';

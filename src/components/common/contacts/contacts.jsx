@@ -53,7 +53,14 @@ export default class Contact extends React.Component
     render()
     {
         const {contacts, name} = this.props;
-        const {contact} = this.state;
+        const defaultContact = {
+            contact: {
+                id: -1,
+                type: 'Мобильный',
+                value: '',
+                comment: ''
+            }
+        };
 
         return (
             <div className='contact'>
@@ -64,7 +71,7 @@ export default class Contact extends React.Component
                             <th>Комментарий</th>
                             <th style={{width: '15px', textAlign: 'center'}}>
                                 <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}}
-                                        onClick={() => {this.props.onOpenContact(contact); this.setState({contact: {}});}}/>
+                                        onClick={() => {this.props.onOpenContact(defaultContact);}}/>
                             </th>
                         </tr>
                     </thead>

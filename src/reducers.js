@@ -7,7 +7,7 @@ import {PricesReducer, PriceFormReducer} from './pages/admin';
 
 import {ClientsReducer, ClientFormReducer} from './pages/clients';
 import {InstructorsReducer, InstructorFormReducer} from './pages/instructors';
-import {ModalReducer, LoginReducer, HeaderReducer} from './components';
+import {LoginReducer, HeaderReducer, ContactFormReducer} from './components';
 
 export default combineReducers({
     routing: routerReducer,
@@ -21,7 +21,7 @@ export default combineReducers({
     ...RateFormReducer,
     ...PricesReducer,
     ...PriceFormReducer,
-    ...ModalReducer,
+    ...ContactFormReducer,
     ...LoginReducer,
     ...HeaderReducer
 });

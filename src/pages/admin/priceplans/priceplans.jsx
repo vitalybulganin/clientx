@@ -7,7 +7,7 @@ import {Button, Table} from 'react-bootstrap';
 import {Loader} from '../../../components/common';
 
 import {PricePlanForm, openPriceForm} from './forms';
-import {getPrices, addPrice, updatePrice, deletePrice} from './actions';
+import {getPrices, savePrices, addPrice, updatePrice, deletePrice} from './actions';
 
 class PricePlansPage extends Component
 {
@@ -47,15 +47,15 @@ class PricePlansPage extends Component
     renderPrice(price)
     {
         return (
-            <tr key={item.id}>
-                <td style={{textAlign: 'center'}}>{item.id}</td>
-                <td>{item.name}</td>
-                <td style={{textAlign: 'center'}}>{item.begin}</td>
-                <td style={{textAlign: 'center'}}>{item.end}</td>
-                <td style={{textAlign: 'center'}}>{item.count}</td>
-                <td style={{textAlign: 'center'}}>{item.duration}</td>
-                <td style={{textAlign: 'center'}}>{item.rate}</td>
-                <td>{item.comment}</td>
+            <tr key={price.id}>
+                <td style={{textAlign: 'center'}}>{price.id}</td>
+                <td>{price.name}</td>
+                <td style={{textAlign: 'center'}}>{price.begin}</td>
+                <td style={{textAlign: 'center'}}>{price.end}</td>
+                <td style={{textAlign: 'center'}}>{price.count}</td>
+                <td style={{textAlign: 'center'}}>{price.duration}</td>
+                <td style={{textAlign: 'center'}}>{price.rate}</td>
+                <td>{price.comment}</td>
                 <td style={{textAlign: 'center'}}>
                     <Button className='edit' bsSize='xsmall' bsStyle='default' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openPriceForm(price));}}/>
                     <Button className='delete' bsSize='xsmall' bsStyle='danger' style={{minWidth: '23px', marginLeft: '5px'}} onClick={() => {this.props.dispatch(deletePrice(price));}}/>
@@ -81,11 +81,11 @@ class PricePlansPage extends Component
                             <th style={{width: '100px', textAlign: 'center'}}>Начало</th>
                             <th style={{width: '100px', textAlign: 'center'}}>Окончание</th>
                             <th style={{width: '80px', textAlign: 'center'}}>Кол-во</th>
-                            <th style={{width: '150px', textAlign: 'center'}}>Занятие, мин</th>
+                            <th style={{width: '150px', textAlign: 'center'}}>Длительность, мин</th>
                             <th style={{width: '200px', textAlign: 'center'}}>Нормочас, руб/ч</th>
                             <th>Комментарий</th>
                             <th style={{width: '100px', textAlign: 'center'}}>
-                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openPriceForm());}}/>
+                                <Button className='add' bsSize='xsmall' bsStyle='success' style={{minWidth: '23px'}} onClick={() => {this.props.dispatch(openPriceForm({}));}}/>
                             </th>
                         </tr>
                     </thead>

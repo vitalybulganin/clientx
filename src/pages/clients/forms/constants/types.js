@@ -14,16 +14,4 @@ export const CLOSE_CLIENT_FORM = 'CLOSE_CLIENT_FORM';
  *
  * @type {string}
  */
-export const ADD_CONTACT = 'ADD_CONTACT';
-
-/**
- *
- * @type {string}
- */
-export const UPDATE_CONTACT = 'UPDATE_CONTACT';
-
-/**
- *
- * @type {string}
- */
-export const DELETE_CONTACT = 'DELETE_CONTACT';
+export const EDIT_CLIENT_FORM = 'EDIT_CLIENT_FORM';

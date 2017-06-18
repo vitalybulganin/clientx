@@ -1,2 +1,2 @@
 export {LoginForm, login, LoginReducer, LOGIN} from './login';
-export {ContactForm} from './contact';
+export {ContactForm, ContactFormReducer, openContactForm, closeContactForm, addContact, updateContact, deleteContact, editContact} from './contact';

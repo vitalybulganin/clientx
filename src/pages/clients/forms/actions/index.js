@@ -1,1 +1,1 @@
-export {openClientForm, closeClientForm, addContact, updateContact, deleteContact} from './actions';
+export {openClientForm, closeClientForm, editClientForm} from './actions';

@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormControl, ControlLabel, FormGroup, Button, Form} from 'react-bootstrap';
 
-import {Person, Contacts, openModal, ContactForm} from '../../../components';
+import {Person, Contacts, ContactForm} from '../../../components';
+import {openContactForm, addContact, updateContact, deleteContact} from '../../../components';
 
-import {closeClientForm, updateContact, addContact, deleteContact} from './actions';
+import {closeClientForm, editClientForm} from './actions';
 
 class ClientForm extends Component
 {
@@ -38,21 +39,21 @@ class ClientForm extends Component
 
     onOpenContact(contact)
     {
-        const options = {
-            title: (typeof contact !== 'undefined' && typeof contact.id !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
-            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
-        };
-        this.props.dispatch(openModal(options));
+        this.props.dispatch(openContactForm(contact));
     }
 
     onSaveContact(contact)
     {
-        (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
+        const {client} = this.props.client;
+
+        (contact.id !== -1) ? this.props.dispatch(updateContact(client, contact)) : this.props.dispatch(addContact(client, contact));
     }
 
     onDeleteContact(contact)
     {
-        this.props.dispatch(deleteContact(contact));
+        const {client} = this.props.client;
+
+        this.props.dispatch(deleteContact(client, contact));
     }
 
     onTextChanged(event)
@@ -69,7 +70,7 @@ class ClientForm extends Component
             default:
                 console.error('Unknown coponent id', id);
         }
-        this.setState({form: {client}});
+        this.props.dispatch(editClientForm(client));
     }
 
     onPersonChanged(id, value)
@@ -108,7 +109,7 @@ class ClientForm extends Component
                 console.error('Unknown component id', id);
                 break;
         }
-        this.setState({client: {client}});
+        this.props.dispatch(editClientForm(client));
     }
 
     onClose() { this.props.dispatch(closeClientForm()); }
@@ -118,13 +119,13 @@ class ClientForm extends Component
         const {client} = this.props.client;
         // Saving the client.
         this.props.onSave(client);
+        // Closing the form.
+        this.onClose();
     }
 
     render()
     {
-        const {showForm} = this.props.client;
-        let {client} = this.props.client;
-        if (client === null) { client = ClientForm.defaultProps.client; }
+        const {client, showForm} = this.props.client;
         const {contacts} = client || [];
 
         return (
@@ -148,8 +149,8 @@ class ClientForm extends Component
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <ControlLabel>Комментарий:</ControlLabel>
-                                        <FormControl componentClass='textarea' id='comment' placeholder='Комментарий' defaultValue={client.comment} onChange={this.onTextChange}/>
+                                        <ControlLabel>Комментарий</ControlLabel>
+                                        <FormControl componentClass='textarea' id='comment' placeholder='Комментарий' defaultValue={client.comment} onChange={this.onTextChanged}/>
                                     </FormGroup>
                                 </Tab>
                                 <Tab eventKey={2} title='Записи' disabled/>
@@ -162,6 +163,7 @@ class ClientForm extends Component
                         </Modal.Footer>
                     </Modal>
                 </Form>
+                {/*<ContactForm onSave={this.onSaveContact}/>*/}
             </div>
         );
     }

@@ -1,4 +1,4 @@
-import * as types from '../constants/types';
+import * as types from '../constants';
 import {LocalStorageManager} from '../../../utils';
 
 const initialState = {

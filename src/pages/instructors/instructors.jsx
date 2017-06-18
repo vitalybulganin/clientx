@@ -30,7 +30,7 @@ class InstructorsPage extends Component
             contacts: [],
             skills: [],
             rates: [],
-            priceplans: []
+            prices: []
         }
     };
 
@@ -38,7 +38,7 @@ class InstructorsPage extends Component
     {
         super(props);
 
-        bindAll(this, ['onSave', 'onSearch', 'renderInstructor']);
+        bindAll(this, ['onSave', 'onSearch', 'onDelete', 'renderInstructor']);
 
         this.state = {
             deleteShowed: true
@@ -63,13 +63,17 @@ class InstructorsPage extends Component
         this.props.dispatch(findInstructor(value));
     }
 
+    onDelete(instructor)
+    {
+        this.props.dispatch(deleteInstructor(instructor));
+        // Saving changes.
+        this.componentWillUnmount();
+    }
+
     onSave(instructor)
     {
-        console.log('Saving the instructor', instructor);
-
         (instructor.id === -1) ? this.props.dispatch(addInstructor(instructor)) : this.props.dispatch(updateInstructor(instructor));
-        // Closing the form.
-        this.props.dispatch(closeInstructorForm());
+        // Saving changes.
         this.componentWillUnmount();
     }
 
@@ -94,7 +98,7 @@ class InstructorsPage extends Component
             <li className='client-item media' key={instructor.id}>
                 <div className='client-info media-body'>
                     <div className='client-head'>
-                        <Button className='delete pull-right' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(deleteInstructor(instructor));}} style={displayDelete}/>
+                        <Button className='delete pull-right' bsStyle='danger' bsSize='xsmall' onClick={() => {this.onDelete(instructor);}} style={displayDelete}/>
                         <span className='client-name'><a style={displayCursor} onClick={() => {this.props.dispatch(openInstructorForm(instructor));}}>{instructor.lastName} {instructor.firstName} {instructor.secondName}</a></span>
                         {
                             mobiles.map((mobile, index) => (
@@ -118,7 +122,7 @@ class InstructorsPage extends Component
     render()
     {
         const {instructors, loaded} = this.props.instructors;
-        const {instructor} = InstructorsPage.defaultProps;
+        const {instructor} = this.state;
 
         return (
             <div>

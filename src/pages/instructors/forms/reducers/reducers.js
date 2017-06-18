@@ -1,4 +1,4 @@
-import * as types from '../constants/types';
+import * as types from '../constants';
 
 const initialState = {
     instructor: {
@@ -12,16 +12,10 @@ const initialState = {
         contacts: [],
         skills: [],
         rates: [],
-        priceplans: []
+        prices: []
     },
     error: '',
-    showForm: false,
-    contact: {
-        id: -1,
-        type: '',
-        value: '',
-        comment: ''
-    }
+    showForm: false
 };
 
 function instructorFormReducer(state = initialState, action)
@@ -29,36 +23,30 @@ function instructorFormReducer(state = initialState, action)
     switch (action.type)
     {
         case types.OPEN_INSTRUCTOR_FORM:
-            let error = action.error;
+            const openInstructor = (typeof action.instructor == 'undefined') ? state.instructor : action.instructor;
 
-            if (action.instructor.lastName === '' && action.instructor.firstName === '') { error = 'Фамилия и имя клиента обязательные поля';  }
-            return Object.assign({}, state, {error, instructor: action.instructor, showForm: true});
+            return Object.assign({}, state, {instructor: openInstructor, showForm: true});
 
         case types.CLOSE_INSTRUCTOR_FORM:
-            return Object.assign({}, state, {showForm: false});
-
-        case types.ADD_CONTACT:
-            const {instructor} = state;
-            const contact = {
-                id: instructor.contacts.length + 1,
-                type: action.contact.type,
-                value: action.contact.value,
-                comment: action.contact.comment
+            const defaultInstructor = {
+                instructor: {
+                    id: -1,
+                    lastName: '',
+                    firstName: '',
+                    secondName: '',
+                    birthday: '',
+                    gender: '',
+                    comment: '',
+                    contacts: [],
+                    skills: [],
+                    rates: [],
+                    prices: []
+                }
             };
-            instructor.contacts.push(contact);
+            return Object.assign({}, state, {instructor: defaultInstructor.instructor, showForm: false});
 
-            return Object.assign({}, state, {instructor, contact: {}});
-
-        case types.UPDATE_CONTACT:
-            return Object.assign({}, state, {contact: action.contact});
-
-        case types.CLOSE_CONTACT:
-            return Object.assign({}, state, {contact: {}});
-
-        case types.DELETE_CONTACT:
-            state.instructor.contacts = state.instructor.contacts.filter(contact => contact.id !== action.contact.id);
-
-            return Object.assign({}, state, {instructor: state.instructor});
+        case types.EDIT_INSTRUCTOR_FORM:
+            return Object.assign({}, state, {instructor: action.instructor});
 
         default:
             return state;

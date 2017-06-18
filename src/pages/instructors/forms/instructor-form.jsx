@@ -4,11 +4,10 @@ import {PropTypes} from 'prop-types';
 import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormGroup, Button, Form, FormControl, ControlLabel} from 'react-bootstrap';
 
-import {closeInstructorForm, updateContact, addContact, deleteContact} from './actions';
+import {closeInstructorForm, editInstructorForm} from './actions';
 
 import {Person, Contacts, Skills, Rates} from '../../../components/common';
-import {openModal} from '../../../components/common';
-import {ContactForm} from '../../../components/forms';
+import {ContactForm, openContactForm, updateContact, addContact, deleteContact} from '../../../components/forms';
 
 class InstructorForm extends Component
 {
@@ -30,7 +29,7 @@ class InstructorForm extends Component
             contacts: [],
             skills: [],
             rates: [],
-            priceplans: []
+            prices: []
         }
     };
 
@@ -57,60 +56,45 @@ class InstructorForm extends Component
 
     onOpenContact(contact)
     {
-
-        const options = {
-            title: (typeof contact !== 'undefined' && typeof contact.id !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
-            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
-        };
-        this.props.dispatch(openModal(options));
+        this.props.dispatch(openContactForm(contact));
     }
 
     onSaveContact(contact)
     {
-        (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
+        const {instructor} = this.props.instructor;
+
+        (contact.id !== -1) ? this.props.dispatch(updateContact(instructor, contact)) : this.props.dispatch(addContact(instructor, contact));
     }
 
     onDeleteContact(contact)
     {
-        this.props.dispatch(deleteContact(contact));
+        const {instructor} = this.props.instructor;
+
+        this.props.dispatch(deleteContact(instructor, contact));
     }
 
     onOpenSkill(skill)
     {
-        const options = {
-            title: (typeof skill !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
-            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
-        };
-        this.props.dispatch(openModal(options));
     }
 
     onSaveSkill(skill)
     {
-        // (skill.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
     }
 
     onDeleteSkill(skill)
     {
-        // this.props.dispatch(deleteContact(contact));
     }
 
     onOpenRate(rate)
     {
-        const options = {
-            title: (typeof contact !== 'undefined') ? 'Редактирование контакта' : 'Новый контакт',
-            content: <ContactForm contact={contact} onSave={this.onSaveContact}/>
-        };
-        this.props.dispatch(openModal(options));
     }
 
     onSaveRate(rate)
     {
-        // (contact.id !== -1) ? this.props.dispatch(updateContact(contact)) : this.props.dispatch(addContact(contact));
     }
 
     onDeleteRate(rate)
     {
-        // this.props.dispatch(deleteContact(contact));
     }
 
     onTextChanged(event)
@@ -127,7 +111,7 @@ class InstructorForm extends Component
             default:
                 console.error('Unknown coponent id', id);
         }
-        this.setState({form: {instructor}});
+        this.props.dispatch(editInstructorForm(instructor));
     }
 
     onPersonChanged(id, value)
@@ -164,7 +148,7 @@ class InstructorForm extends Component
                 console.error('Unknown component id', id);
                 break;
         }
-        this.setState({instructor: {instructor}});
+        this.props.dispatch(editInstructorForm(instructor));
     }
 
     onClose() { this.props.dispatch(closeInstructorForm()); }
@@ -174,17 +158,16 @@ class InstructorForm extends Component
         const {instructor} = this.props.instructor;
         // Saving the instructor.
         this.props.onSave(instructor);
+        // Closing the form.
+        this.onClose();
     }
 
     render()
     {
-        const {showForm} = this.props.instructor;
-        const {instructor} = this.props.instructor || InstructorForm.defaultProps.instructor;
-        const {contacts} = instructor || [];
-        const {skills} = instructor || [];
-        const {rates} = instructor || [];
-        //<!!!> const {contacts, skills, rates} = instructor;
-        console.log('Инструктор: ', instructor);
+        const {instructor, showForm} = this.props.instructor;
+        const {contacts} = instructor || {};
+        const {skills} = this.props.skills || [];
+        const {rates} = this.props.rates || [];
 
         return (
             <div className='client-form' style={{width: '450px'}}>
@@ -227,18 +210,21 @@ class InstructorForm extends Component
                         <Modal.Footer>
                             <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
                             {
-                                (instructor.lastName === '' || instructor.firstName === '' || instructor.contacts.length === 0)
+                                (instructor.lastName === '' || instructor.firstName === '' || contacts.length === 0)
                                     ? <Button className='save' bsStyle='success' bsSize='xsmall' disabled onClick={this.onSave}>Сохранить</Button>
                                     : <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
                             }
                         </Modal.Footer>
                     </Modal>
                 </Form>
+                {/*<ContactForm onSave={this.onSave}/> */}
             </div>
         );
     }
 }
 const mapStateToProps = (state) => ({
-    instructor: state.instructor
+    instructor: state.instructor,
+    skills: state.skills,
+    rates: state.rates
 });
 export default connect(mapStateToProps)(InstructorForm);

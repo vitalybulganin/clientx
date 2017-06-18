@@ -3,6 +3,9 @@ import {LocalStorageManager} from '../../../utils';
 
 const initialState = {
     instructors: [],
+    skills: [],
+    rates: [],
+    prices: [],
     error: '',
     loaded: false
 };
@@ -12,9 +15,17 @@ function instructorsReducer(state = initialState, action)
     switch (action.type)
     {
         case types.GET_INSTRUCTORS:
-            const instructors = action.instructors;
+            let instructors = LocalStorageManager.get('instructors');
+            let skills = LocalStorageManager.get('skills');
+            let rates = LocalStorageManager.get('rates');
+            let prices = LocalStorageManager.get('prices');
 
-            return Object.assign({}, state, {instructors, loaded: true});
+            if (typeof instructors === 'undefined' || typeof instructors.length === 'undefined') { instructors = []; }
+            if (typeof skills === 'undefined' || typeof skills.length === 'undefined') { skills = []; }
+            if (typeof rates === 'undefined' || typeof rates.length === 'undefined') { rates = []; }
+            if (typeof prices === 'undefined' || typeof prices.length === 'undefined') { prices = []; }
+
+            return Object.assign({}, state, {instructors, skills, rates, prices, loaded: true});
 
         case types.SAVE_INSTRUCTOR:
             LocalStorageManager.set('instructors', action.instructors);
@@ -33,12 +44,12 @@ function instructorsReducer(state = initialState, action)
                 contacts: [],
                 skills: [],
                 rates: [],
-                priceplans: []
+                prices: []
             };
             instructor.contacts.map((contact) => {action.instructor.contacts.push(contact)});
             instructor.skills.map((skill) => {action.instructor.skills.push(skill)});
             instructor.rates.map((rate) => {action.instructor.rates.push(rate)});
-            instructor.priceplans.map((price) => {action.instructor.priceplans.push(price)});
+            instructor.prices.map((price) => {action.instructor.prices.push(price)});
             // Adding a new client.
             state.instructors.push(instructor);
 

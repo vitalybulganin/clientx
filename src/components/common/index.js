@@ -6,5 +6,3 @@ export {Loader, Loader2} from './loader';
 export {Skills} from './skills';
 export {Rates} from './rates';
 export {PricePlans} from './priceplans';
-
-export {ModalReducer, openModal, closeModal} from './form';

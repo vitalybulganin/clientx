@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
 
 import {getClients, saveClients, addClient, updateClient, deleteClient, findClient} from './actions';
-import {openClientForm, closeClientForm, ClientForm} from './forms';
+import {openClientForm, ClientForm} from './forms';
 import {Loader, Search} from '../../components/common';
 
 import './clients.less';
@@ -65,11 +65,8 @@ class ClientsPage extends Component
 
     onSave(client)
     {
-        console.log('Saving the client', client);
-
         (client.id === -1) ? this.props.dispatch(addClient(client)) : this.props.dispatch(updateClient(client));
-        // Closing the form.
-        this.props.dispatch(closeClientForm());
+        // Saving changes.
         this.componentWillUnmount();
     }
 
@@ -119,12 +116,21 @@ class ClientsPage extends Component
     render()
     {
         const {clients, loaded} = this.props.clients;
-        const {client} = ClientsPage.defaultProps;
+        const defaultClient = {
+            id: -1,
+            lastName: '',
+            firstName: '',
+            secondName: '',
+            birthday: '',
+            gender: '',
+            comment: '',
+            contacts: []
+        };
 
         return (
             <div>
                 <Search onSearch={this.onSearch}/>
-                <Button className='add' onClick={() => {this.props.dispatch(openClientForm(client));}}/>
+                <Button className='add' onClick={() => {this.props.dispatch(openClientForm(defaultClient));}}/>
 
                  <ul className='client-list media'>
                     {
