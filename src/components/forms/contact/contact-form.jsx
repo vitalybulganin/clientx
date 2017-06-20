@@ -93,6 +93,8 @@ class ContactForm extends Component
         const {contact, showForm} = this.props.contact;
         const title = (contact.id === -1) ? 'Новый контакт' : 'Редактирование контакта';
 
+        console.log('contact', this.props.contact);
+
         return (
             <div className='clientx-form'>
                 <Form>

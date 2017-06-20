@@ -1,4 +1,3 @@
 export LoginForm from './login-form.jsx';
-export {login} from './actions';
+export {openLoginForm, closeLoginForm, editLoginForm, login2server} from './actions';
 export {LoginReducer} from './reducers';
-export {LOGIN} from './constants';

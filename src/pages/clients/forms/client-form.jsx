@@ -5,7 +5,7 @@ import {bindAll} from 'lodash';
 import {Tabs, Tab, Modal, FormControl, ControlLabel, FormGroup, Button, Form} from 'react-bootstrap';
 
 import {Person, Contacts, ContactForm} from '../../../components';
-import {openContactForm, addContact, updateContact, deleteContact} from '../../../components';
+import {openContactForm, addContact, updateContact, deleteContact} from '../../../components/forms';
 
 import {closeClientForm, editClientForm} from './actions';
 
@@ -163,7 +163,7 @@ class ClientForm extends Component
                         </Modal.Footer>
                     </Modal>
                 </Form>
-                {/*<ContactForm onSave={this.onSaveContact}/>*/}
+                <ContactForm onSave={this.onSaveContact}/>
             </div>
         );
     }

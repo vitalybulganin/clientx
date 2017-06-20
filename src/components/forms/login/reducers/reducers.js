@@ -1,14 +1,29 @@
 import * as types from '../constants';
 
 const initialState = {
-    user: {}
+    user: {
+        login: '',
+        password: '',
+        saved: false
+    },
+    error: '',
+    showForm: false
 };
 
 function loginReducer(state = initialState, action)
 {
     switch (action.type)
     {
-        case types.LOGIN:
+        case types.OPEN_LOGIN_FORM:
+            return Object.assign({}, state, {user: action.user, showForm: true});
+
+        case types.CLOSE_LOGIN_FORM:
+            return Object.assign({}, state, {showForm: false});
+
+        case types.EDIT_LOGIN_FORM:
+            return Object.assign({}, state, {user: action.user, showForm: true});
+
+        case types.LOGIN_TO_SERVER:
             return Object.assign({}, state, {user: action.user});
 
         default:
@@ -16,7 +31,6 @@ function loginReducer(state = initialState, action)
     }
 }
 
-const LoginReducer = {
+export const LoginReducer = {
     login: loginReducer
 };
-export default LoginReducer;

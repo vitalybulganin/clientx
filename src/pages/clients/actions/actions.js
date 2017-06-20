@@ -1,10 +1,7 @@
 import * as types from '../constants';
 
 export function getClients() {
-    let clients = LocalStorageManager.get('clients');
-
-    if (typeof clients === 'undefined' || typeof clients.length === 'undefined') { clients = []; }
-    return (dispatch) => {dispatch({type: types.GET_CLIENTS, clients, loaded: false})};
+    return (dispatch) => {dispatch({type: types.GET_CLIENTS, loaded: false})};
 }
 
 export function saveClients(clients) {

@@ -1,1 +1,1 @@
-export LOGIN from './action-types';
+export {OPEN_LOGIN_FORM, CLOSE_LOGIN_FORM, EDIT_LOGIN_FORM, LOGIN_TO_SERVER} from './types';

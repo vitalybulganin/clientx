@@ -54,12 +54,10 @@ export default class Contact extends React.Component
     {
         const {contacts, name} = this.props;
         const defaultContact = {
-            contact: {
-                id: -1,
-                type: 'Мобильный',
-                value: '',
-                comment: ''
-            }
+            id: -1,
+            type: 'Мобильный',
+            value: '',
+            comment: ''
         };
 
         return (

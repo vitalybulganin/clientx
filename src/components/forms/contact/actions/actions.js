@@ -1,7 +1,7 @@
 import * as types from '../constants';
 
 export function openContactForm(contact) {
-    return {type: types.OPEN_CONTECT, contact};
+    return {type: types.OPEN_CONTACT, contact};
 }
 
 export function closeContactForm() {
@@ -9,7 +9,7 @@ export function closeContactForm() {
 }
 
 export function addContact(parent, contact) {
-    return {type: types.ADD_CONTACT, parent, client};
+    return {type: types.ADD_CONTACT, parent, contact};
 }
 
 export function updateContact(parent, contact) {
@@ -21,5 +21,5 @@ export function deleteContact(parent, contact) {
 }
 
 export function editContact(contact) {
-    return {type: types.EDIT_CONTECT, contact};
+    return {type: types.EDIT_CONTACT, contact};
 }

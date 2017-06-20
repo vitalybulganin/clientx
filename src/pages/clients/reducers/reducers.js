@@ -12,7 +12,10 @@ function clientsReducer(state = initialState, action)
     switch (action.type)
     {
         case types.GET_CLIENTS:
-            return Object.assign({}, state, {clients: action.clients, loaded: true});
+            let objects = LocalStorageManager.get('clients');
+
+            if (typeof objects === 'undefined' || typeof objects.length === 'undefined') { objects = []; }
+            return Object.assign({}, state, {clients: objects, loaded: true});
 
         case types.SAVE_CLIENTS:
             LocalStorageManager.set('clients', action.clients);

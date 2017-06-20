@@ -8,10 +8,9 @@ import ErrorPage from '../pages/error/error.jsx';
 export default
 (
     <Route>
-        <Route path={Home.path} component={Home}/>
-        <Route path='*' component={ErrorPage}/>
-
         {AdminRoutes}
 
+        <Route path={Home.path} component={Home}/>
+        <Route path='*' component={ErrorPage}/>
     </Route>
 );

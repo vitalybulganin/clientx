@@ -217,7 +217,7 @@ class InstructorForm extends Component
                         </Modal.Footer>
                     </Modal>
                 </Form>
-                {/*<ContactForm onSave={this.onSave}/> */}
+                <ContactForm onSave={this.onSave}/>
             </div>
         );
     }

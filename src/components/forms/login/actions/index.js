@@ -1,1 +1,1 @@
-export login from './actions';
+export {login2server, openLoginForm, closeLoginForm, editLoginForm} from './actions';

@@ -1,1 +1,1 @@
-export LoginReducer from './reducers';
+export {LoginReducer} from './reducers';

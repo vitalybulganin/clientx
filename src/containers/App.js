@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {DevTools} from '../utils';
 
 import {Header, Footer, ModalForm, LoginForm} from '../components';
-import {openModal} from '../components';
+import {openLoginForm} from '../components/forms';
 
 class App extends Component
 {
@@ -35,11 +35,9 @@ class App extends Component
 
     onOpenLogin()
     {
-        const options = {
-            title: 'Авторизация',
-            content: <LoginForm />
-        };
-        this.props.dispatch(openModal(options));
+        const {user} = this.props.login;
+
+        this.props.dispatch(openLoginForm(user));
     }
 
     onSearch(value)
@@ -67,7 +65,7 @@ class App extends Component
                 <div className='app-footer'>
                     {/* <Footer />*/}
                 </div>
-                <ModalForm />
+                <LoginForm />
                 { process.env.NODE_ENV !== 'production' ? <DevTools /> : null }
             </div>
         );
@@ -75,7 +73,8 @@ class App extends Component
 }
 const mapStateToProps = (state) => ({
     clients: state.clients,
-    instructor: state.instructors,
+    instructors: state.instructors,
+    login: state.login,
     activePage: state.activePage
 });
 export default connect(mapStateToProps)(App);
