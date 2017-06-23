@@ -1,0 +1,1 @@
+export {InstructorsReducer} from './reducers';

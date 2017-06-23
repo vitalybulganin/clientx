@@ -1,0 +1,34 @@
+/**  Interface Styles **/
+
+.app-clientx-crm .app-header .navbar {
+    position: relative;
+    minHeight: 30px;
+    margin-bottom: 20px;
+    border: 1px solid transparent
+}
+
+.app-clientx-crm .app-header .navbar-collapse {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.app-clientx-crm .app-header .navbar-brand {
+    float: left;
+    height: 30px;
+    padding: 0px 0px;
+    marginTop: 10px;
+    fontSize: 10px;
+    line-height: 30px
+}
+
+.app-clientx-crm .app-header .navbar-nav > li > a {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 30px;
+}
+
+.app-clientx-crm .app-header .nav > li > a {
+    position: relative;
+    display: block;
+}
+
