@@ -1,4 +1,5 @@
 import * as types from '../constants/types';
+import {isEmpty, isArray} from 'lodash';
 import {LocalStorageManager} from '../../../utils';
 
 const initialState = {
@@ -20,10 +21,10 @@ function instructorsReducer(state = initialState, action)
             let rates = LocalStorageManager.get('rates');
             let prices = LocalStorageManager.get('prices');
 
-            if (typeof instructors === 'undefined' || typeof instructors.length === 'undefined') { instructors = []; }
-            if (typeof skills === 'undefined' || typeof skills.length === 'undefined') { skills = []; }
-            if (typeof rates === 'undefined' || typeof rates.length === 'undefined') { rates = []; }
-            if (typeof prices === 'undefined' || typeof prices.length === 'undefined') { prices = []; }
+            if (isEmpty(instructors) !== false || isArray(instructors) !== true) { instructors = []; }
+            if (isEmpty(skills) !== false || isArray(skills) !== true) { skills = []; }
+            if (isEmpty(rates) !== false || isArray(rates) !== true) { rates = []; }
+            if (isEmpty(prices) !== false || isArray(prices) !== true) { prices = []; }
 
             return Object.assign({}, state, {instructors, skills, rates, prices, loaded: true});
 

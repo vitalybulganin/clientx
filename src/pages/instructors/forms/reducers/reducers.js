@@ -23,9 +23,7 @@ function instructorFormReducer(state = initialState, action)
     switch (action.type)
     {
         case types.OPEN_INSTRUCTOR_FORM:
-            const openInstructor = (typeof action.instructor == 'undefined') ? state.instructor : action.instructor;
-
-            return Object.assign({}, state, {instructor: openInstructor, showForm: true});
+            return Object.assign({}, state, {instructor: action.instructor, showForm: true});
 
         case types.CLOSE_INSTRUCTOR_FORM:
             const defaultInstructor = {

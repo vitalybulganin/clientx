@@ -23,8 +23,6 @@ export function updateClient(client) {
 }
 
 export function deleteClient(client) {
-    console.log('deleteClient action', client);
-
     return {
         type: types.DELETE_CLIENT,
         client
@@ -32,8 +30,6 @@ export function deleteClient(client) {
 }
 
 export function findClient(filter) {
-    console.log('findClient action', filter);
-
     return {
         type: types.FIND_CLIENT,
         filter

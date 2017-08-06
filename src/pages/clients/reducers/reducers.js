@@ -1,4 +1,5 @@
 import * as types from '../constants';
+import {isEmpty, isArray} from 'lodash';
 import {LocalStorageManager} from '../../../utils';
 
 const initialState = {
@@ -14,7 +15,7 @@ function clientsReducer(state = initialState, action)
         case types.GET_CLIENTS:
             let objects = LocalStorageManager.get('clients');
 
-            if (typeof objects === 'undefined' || typeof objects.length === 'undefined') { objects = []; }
+            if (isEmpty(objects) !== false && isArray(objects) !== true) { objects = []; }
             return Object.assign({}, state, {clients: objects, loaded: true});
 
         case types.SAVE_CLIENTS:
@@ -28,8 +29,6 @@ function clientsReducer(state = initialState, action)
                 lastName: action.client.lastName,
                 firstName: action.client.firstName,
                 secondName: action.client.secondName,
-                mobile: action.client.mobile,
-                email: action.client.email,
                 birthday: action.client.birthday,
                 gender: action.client.gender,
                 contacts: [],

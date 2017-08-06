@@ -52,8 +52,6 @@ class App extends Component
 
     render()
     {
-        console.log('Children list: ', this.props.children);
-
         const {selectedView, userName} = this.state;
 
         return (

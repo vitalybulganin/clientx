@@ -14,8 +14,7 @@ class PricePlansPage extends Component
     static path = '/priceplans';
 
     static propTypes = {
-        dispatch: PropTypes.func.isRequired,
-        prices: PropTypes.array
+        dispatch: PropTypes.func.isRequired
     };
 
     componentDidMount()

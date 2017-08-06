@@ -13,12 +13,7 @@ class RatesPage extends Component
     static path = '/rates';
 
     static propTypes = {
-        dispatch: PropTypes.func.isRequired,
-        rates: PropTypes.array.isRequired
-    };
-
-    static defaultProps = {
-        reates: []
+        dispatch: PropTypes.func.isRequired
     };
 
     componentDidMount()

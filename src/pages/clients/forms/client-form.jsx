@@ -47,6 +47,8 @@ class ClientForm extends Component
         const {client} = this.props.client;
 
         (contact.id !== -1) ? this.props.dispatch(updateContact(client, contact)) : this.props.dispatch(addContact(client, contact));
+        // Sending EDIT action.
+        this.props.dispatch(editClientForm(client));
     }
 
     onDeleteContact(contact)
@@ -76,8 +78,6 @@ class ClientForm extends Component
     onPersonChanged(id, value)
     {
         const {client} = this.props.client;
-
-        console.log('Client changed', client);
 
         switch (id)
         {
@@ -159,7 +159,12 @@ class ClientForm extends Component
 
                         <Modal.Footer>
                             <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={() => {this.props.dispatch(closeClientForm());}}>Закрыть</Button>
-                            <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+                            {
+                                (client.lastName === '' && client.firstName === '' && contacts.length === 0)
+                                    ? <Button className='save' bsStyle='success' bsSize='xsmall' disabled onClick={this.onSave}>Сохранить</Button>
+                                    : <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+
+                            }
                         </Modal.Footer>
                     </Modal>
                 </Form>

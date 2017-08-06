@@ -10,8 +10,6 @@ const initialState = {
 
 function pricesReducer(state = initialState, action)
 {
-    console.log('Reducer pricesReducer', action);
-
     switch (action.type)
     {
         case types.GET_PRICEPLANS:

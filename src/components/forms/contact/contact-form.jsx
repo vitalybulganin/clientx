@@ -1,26 +1,16 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
-import {bindAll} from 'lodash';
+import {bindAll, isEmpty} from 'lodash';
 import {Form, Modal, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 
 import {closeContactForm, editContact} from '../../../components';
-
-const defaultContact = {
-    contact: {
-        id: -1,
-        type: 'Мобильный',
-        value: '',
-        comment: ''
-    }
-};
 
 class ContactForm extends Component
 {
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
         contact: PropTypes.object.isRequired,
-        parent: PropTypes.object.isRequired,
         onSave: PropTypes.func.isRequired
     };
 
@@ -51,7 +41,7 @@ class ContactForm extends Component
     onTextChanged(event)
     {
         const {id, value} = event.target;
-        const {parent, contact} = this.props.contact;
+        const {contact} = this.props.contact;
 
         switch (id)
         {
@@ -93,8 +83,6 @@ class ContactForm extends Component
         const {contact, showForm} = this.props.contact;
         const title = (contact.id === -1) ? 'Новый контакт' : 'Редактирование контакта';
 
-        console.log('contact', this.props.contact);
-
         return (
             <div className='clientx-form'>
                 <Form>
@@ -120,7 +108,11 @@ class ContactForm extends Component
                         </Modal.Body>
                         <Modal.Footer>
                             <Button className='cross' bsStyle='danger' bsSize='xsmall' onClick={this.onClose}>Закрыть</Button>
-                            <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+                            {
+                                (isEmpty(contact.value) !== false)
+                                    ? <Button className='save' bsStyle='success' bsSize='xsmall' disabled onClick={this.onSave}>Сохранить</Button>
+                                    : <Button className='save' bsStyle='success' bsSize='xsmall' onClick={this.onSave}>Сохранить</Button>
+                            }
                         </Modal.Footer>
                     </Modal>
                 </Form>
@@ -130,7 +122,6 @@ class ContactForm extends Component
 }
 
 const mapStateToProps = (state) => ({
-    contact: state.contact,
-    parent: state.parent
+    contact: state.contact
 });
 export default connect(mapStateToProps)(ContactForm);

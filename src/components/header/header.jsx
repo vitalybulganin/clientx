@@ -62,12 +62,12 @@ class Header extends Component
                             </NavDropdown>
                         </Nav>
                     </Navbar.Form>
-                    <Navbar.Form pullLeft>
-                        <FormGroup>
-                            <Search placeholder='Search' onSearch={this.onSearch}/>
-                        </FormGroup>
-                        <Button className='add' bsStyle='success' bsSize='xsmall' type='submit'/>
-                    </Navbar.Form>
+                    {/*<Navbar.Form pullLeft>*/}
+                        {/*<FormGroup>*/}
+                            {/*<Search placeholder='Search' onSearch={this.onSearch}/>*/}
+                        {/*</FormGroup>*/}
+                        {/*<Button className='add' bsStyle='success' bsSize='xsmall' type='submit'/>*/}
+                    {/*</Navbar.Form>*/}
                     <Navbar.Form pullRight>
                         <Nav>
                             <NavDropdown id={3} eventKey={3} title={userName}>

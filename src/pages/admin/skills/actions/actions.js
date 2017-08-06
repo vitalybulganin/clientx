@@ -7,8 +7,6 @@ export function getSkills()
 }
 
 export function saveSkills(skills) {
-    console.log('saveSkills action');
-
     return (dispatch) => {dispatch({type: types.SAVE_SKILLS, skills})};
 }
 

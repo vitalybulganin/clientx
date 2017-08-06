@@ -13,16 +13,7 @@ class SkillsPage extends Component
     static path = '/skills';
 
     static propTypes = {
-        dispatch: PropTypes.func.isRequired,
-        skill: PropTypes.array.isRequired
-    };
-
-    static defaultProps = {
-        skill: {
-            id: -1,
-            name: '',
-            comment: ''
-        }
+        dispatch: PropTypes.func.isRequired
     };
 
     constructor(props, context)

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
-import {bindAll} from 'lodash';
+import {bindAll, isEmpty} from 'lodash';
 import {Tabs, Tab, Modal, FormGroup, Button, Form, FormControl, ControlLabel} from 'react-bootstrap';
 
 import {closeInstructorForm, editInstructorForm} from './actions';
 
-import {Person, Contacts, Skills, Rates} from '../../../components/common';
-import {ContactForm, openContactForm, updateContact, addContact, deleteContact} from '../../../components/forms';
+import {Person, Contacts, Skills, Rates, ContactForm} from '../../../components';
+import {openContactForm, addContact, updateContact, deleteContact} from '../../../components/forms';
 
 class InstructorForm extends Component
 {
@@ -45,12 +45,7 @@ class InstructorForm extends Component
             'onDeleteContact',
             'onOpenContact',
             'onSaveContact',
-            'onDeleteSkill',
-            'onOpenSkill',
-            'onSaveSkill',
-            'onDeleteRate',
-            'onOpenRate',
-            'onSaveRate'
+            'onCheckChanged'
         ]);
     }
 
@@ -64,6 +59,8 @@ class InstructorForm extends Component
         const {instructor} = this.props.instructor;
 
         (contact.id !== -1) ? this.props.dispatch(updateContact(instructor, contact)) : this.props.dispatch(addContact(instructor, contact));
+        // Sending EDIT action.
+        this.props.dispatch(editInstructorForm(instructor));
     }
 
     onDeleteContact(contact)
@@ -71,30 +68,6 @@ class InstructorForm extends Component
         const {instructor} = this.props.instructor;
 
         this.props.dispatch(deleteContact(instructor, contact));
-    }
-
-    onOpenSkill(skill)
-    {
-    }
-
-    onSaveSkill(skill)
-    {
-    }
-
-    onDeleteSkill(skill)
-    {
-    }
-
-    onOpenRate(rate)
-    {
-    }
-
-    onSaveRate(rate)
-    {
-    }
-
-    onDeleteRate(rate)
-    {
     }
 
     onTextChanged(event)
@@ -151,7 +124,28 @@ class InstructorForm extends Component
         this.props.dispatch(editInstructorForm(instructor));
     }
 
-    onClose() { this.props.dispatch(closeInstructorForm()); }
+    onCheckChanged(sender, selectedItem)
+    {
+        const {instructor} = this.props.instructor;
+
+        if (sender.props.name === 'Навыки')
+        {
+            const index = instructor.skills.findIndex(skill => skill.id === selectedItem.id);
+
+            if (index !== -1) { instructor.skills = instructor.skills.filter(skill => skill.id !== selectedItem.id); }
+            if (index === -1) { instructor.skills.push(selectedItem); }
+        }
+        else if (sender.props.name === 'Ставки')
+        {
+            const index = instructor.rates.findIndex(rate => rate.id === selectedItem.id);
+
+            if (index !== -1) { instructor.rates = instructor.rates.filter(rate => rate.id !== selectedItem.id); }
+            if (index === -1) { instructor.rates.push(selectedItem); }
+        }
+        this.props.dispatch(editInstructorForm(instructor));
+    }
+
+    onClose() { this.setState({selectedSkills: [], selectedRates: []}); this.props.dispatch(closeInstructorForm()); }
 
     onSave()
     {
@@ -166,8 +160,7 @@ class InstructorForm extends Component
     {
         const {instructor, showForm} = this.props.instructor;
         const {contacts} = instructor || {};
-        const {skills} = this.props.skills || [];
-        const {rates} = this.props.rates || [];
+        const {skills, rates} = this.props;
 
         return (
             <div className='client-form' style={{width: '450px'}}>
@@ -189,15 +182,15 @@ class InstructorForm extends Component
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <Skills name='Навыки' skills={skills} onOpenSkill={this.onOpenSkill} onDeleteSkill={this.onDeleteSkill} onSaveSkill={this.onSaveSkill}/>
+                                        <Skills name='Навыки' skills={skills} selectedItems={instructor.skills} onChange={this.onCheckChanged}/>
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <Rates name='Ставки' rates={rates} onOpenRate={this.onOpenRate} onDeleteRate={this.onDeleteRate} onSaveRate={this.onSaveRate}/>
+                                        <Rates name='Ставки' rates={rates} selectedItems={instructor.rates} onChange={this.onCheckChanged}/>
                                     </FormGroup>
 
                                     <FormGroup bsSize='small'>
-                                        <ControlLabel>Комментарий:</ControlLabel>
+                                        <ControlLabel>Комментарий</ControlLabel>
                                         <FormControl componentClass='textarea' id='comment' placeholder='Комментарий' defaultValue={instructor.comment} onChange={this.onTextChange}/>
                                     </FormGroup>
                                 </Tab>
@@ -217,14 +210,14 @@ class InstructorForm extends Component
                         </Modal.Footer>
                     </Modal>
                 </Form>
-                <ContactForm onSave={this.onSave}/>
+                <ContactForm onSave={this.onSaveContact}/>
             </div>
         );
     }
 }
 const mapStateToProps = (state) => ({
     instructor: state.instructor,
-    skills: state.skills,
-    rates: state.rates
+    skills: state.instructors.skills,
+    rates: state.instructors.rates
 });
 export default connect(mapStateToProps)(InstructorForm);

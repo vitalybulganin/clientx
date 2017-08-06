@@ -6,8 +6,8 @@ import {Button} from 'react-bootstrap';
 
 import {Search, Loader} from '../../components';
 
-import {openInstructorForm, closeInstructorForm, InstructorForm} from './forms';
-import {getInstructors, saveInstructors, deleteInstructor, updateInstructor, addInstructor} from './actions';
+import {openInstructorForm, InstructorForm} from './forms';
+import {getInstructors, saveInstructors, deleteInstructor, updateInstructor, addInstructor, findInstructor} from './actions';
 
 class InstructorsPage extends Component
 {
@@ -122,12 +122,23 @@ class InstructorsPage extends Component
     render()
     {
         const {instructors, loaded} = this.props.instructors;
-        const {instructor} = this.state;
+        const instructor = {
+            id: -1,
+            lastName: '',
+            firstName: '',
+            secondName: '',
+            birthday: '',
+            gender: '',
+            comment: '',
+            contacts: [],
+            skills: [],
+            rates: [],
+            prices: []
+        };
 
         return (
-            <div>
-                <Search onSearch={this.onSearch}/>
-                <Button className='add' onClick={() => {this.props.dispatch(openInstructorForm(instructor));}}/>
+            <div className='clientx-instructors'>
+                <Search onSearch={this.onSearch} onClick={() => {this.props.dispatch(openInstructorForm(instructor));}}/>
 
                 <ul className='client-list media'>
                     {

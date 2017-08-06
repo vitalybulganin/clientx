@@ -36,7 +36,6 @@ export default class Input extends Component
             'has-error': this.props.error ? true : false
         });
         const {value, error} = this.props;
-        console.log('value', value);
 
         return (
             <div className={divClasses}>

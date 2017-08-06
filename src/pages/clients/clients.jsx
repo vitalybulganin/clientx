@@ -129,10 +129,9 @@ class ClientsPage extends Component
 
         return (
             <div>
-                <Search onSearch={this.onSearch}/>
-                <Button className='add' onClick={() => {this.props.dispatch(openClientForm(defaultClient));}}/>
+                <Search onSearch={this.onSearch} onClick={() => {this.props.dispatch(openClientForm(defaultClient));}}/>
 
-                 <ul className='client-list media'>
+                <ul className='client-list media'>
                     {
                         (loaded !== true) ? <Loader /> : (clients.length !== 0) ? clients.map(this.renderClient) : null
                     }
