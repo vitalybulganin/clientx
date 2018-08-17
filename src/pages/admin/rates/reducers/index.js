@@ -1,0 +1,1 @@
+export {RatesReducer} from './reducers';

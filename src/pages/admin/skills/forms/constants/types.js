@@ -1,0 +1,2 @@
+export const OPEN_SKILL_FORM = 'OPEN_SKILL_FORM';
+export const CLOSE_SKILL_FORM = 'CLOSE_SKILL_FORM';

@@ -1,6 +1,6 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
-import {bindAll} from 'lodash';
+import {bindAll, isEmpty, isObject} from 'lodash';
 import {Table, Checkbox} from 'react-bootstrap';
 
 export default class Rates extends React.Component
@@ -8,8 +8,8 @@ export default class Rates extends React.Component
     static propTypes = {
         name: PropTypes.string.isRequired,
         rates: PropTypes.array.isRequired,
-        onOpenRate: PropTypes.func.isRequired,
-        onDeleteRate: PropTypes.func.isRequired
+        selectedItems: PropTypes.array,
+        onChange: PropTypes.func.isRequired
     };
 
     constructor(props)
@@ -19,17 +19,19 @@ export default class Rates extends React.Component
         bindAll(this, ['renderRate']);
     }
 
-    onChanged(rate)
-    {
-
-    }
-
     renderRate(rate)
     {
+        let {selectedItems} = this.props; if (isEmpty(selectedItems) !== false && isObject(selectedItems) !== true) { selectedItems = []; }
+        const selectedIndex = selectedItems.findIndex(selectedRate => selectedRate.id === rate.id);
+
         return (
             <tr style={{height: '14px'}} key={rate.id}>
                 <td style={{height: '14px'}}>
-                    <Checkbox style={{height: '14px'}} id='rateActive' bsSize='small' onChange={this.onChanged.bind(this, rate)}>{rate.name}</Checkbox>
+                    {
+                        (selectedIndex !== -1)
+                            ? <Checkbox style={{height: '14px'}} id='rateId' bsSize='small' checked onChange={() => {this.props.onChange(this, rate);}}>{rate.name}</Checkbox>
+                            : <Checkbox style={{height: '14px'}} id='rateId' bsSize='small' onChange={() => {this.props.onChange(this, rate);}}>{rate.name}</Checkbox>
+                    }
                 </td>
                 <td style={{height: '14px'}}>{rate.comment}</td>
             </tr>
@@ -41,7 +43,7 @@ export default class Rates extends React.Component
         const {rates, name} = this.props;
 
         return (
-            <div className='contact'>
+            <div className='rates'>
                 <Table responsive striped bordered hover>
                     <thead>
                         <tr style={{height: '14px'}}>

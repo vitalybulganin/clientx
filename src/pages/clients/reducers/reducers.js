@@ -15,7 +15,7 @@ function clientsReducer(state = initialState, action)
         case types.GET_CLIENTS:
             let objects = LocalStorageManager.get('clients');
 
-            if (isEmpty(objects) !== true || isArray(objects) !== true) { objects = []; }
+            if (isEmpty(objects) !== false && isArray(objects) !== true) { objects = []; }
             return Object.assign({}, state, {clients: objects, loaded: true});
 
         case types.SAVE_CLIENTS:
