@@ -1,1 +1,0 @@
-export {RateFormReducer} from './reducers';

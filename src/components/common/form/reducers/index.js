@@ -1,1 +1,0 @@
-export ModalReducer from './reducers';
