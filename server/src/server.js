@@ -8,7 +8,7 @@ const {
     MySqlConnection,
     SkillsDao,
     RatesDao,
-    getPrices, updatePrice, addPrice, deletePrice,
+    PriceplansDao,
     ClientsDao,
     getInstructors, updateInstructor, addInstructor, deleteInstructor} = require('./dao');
 // Initialization of express application
@@ -25,6 +25,8 @@ const clients = new ClientsDao(connection);
 const skills = new SkillsDao(connection);
 // Creating skills dao.
 const rates = new RatesDao(connection);
+// Creating skills dao.
+const prices = new PriceplansDao(connection);
 // Handling error events.
 connection.on(err => {
     console.log(err);
@@ -93,21 +95,21 @@ app.post('/api/deleteskill', (req, res) => {
 // RESTful api handlers, PRICEPLAN
 // ------------------------------------------------------------------------------------------------------------------ //
 app.get('/api/priceplans', (req, res) => {
-    getPrices().then(rows => res.type('application/json').send(rows)).catch(err => res.type('application/json').send(err));
+    prices.getPrices().then(rows => res.type('application/json').send(rows)).catch(err => res.type('application/json').send(err));
 });
 app.post('/api/updateprice', (req, res) => {
     // Getting a list of rows.
-    updatePrice(req.body.price).then(price => {res.type('application/json').send(price);}).catch(err => {console.log(err); res.type('application/json').send(err);});
+    prices.updatePrice(req.body.price).then(price => {res.type('application/json').send(price);}).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 app.post('/api/addprice', (req, res) => {
     console.log('add: ' + req.body);
     // Getting a list of rows.
-    addPrice(req.body.price).then(price => {res.type('application/json').send(price);}).catch(err => {console.log(err); res.type('application/json').send(err);});
+    prices.addPrice(req.body.price).then(price => {res.type('application/json').send(price);}).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 app.post('/api/deleteprice', (req, res) => {
     console.log('delete: ' + req.body);
     // Getting a list of rows.
-    deletePrice(req.body.price).then(price => {res.type('application/json').send(price);}).catch(err => {console.log(err); res.type('application/json').send(err);});
+    prices.deletePrice(req.body.price).then(price => {res.type('application/json').send(price);}).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 // ------------------------------------------------------------------------------------------------------------------ //
 // RESTful api handlers, Instructors
