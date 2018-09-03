@@ -1,1 +1,0 @@
-export {SkillFormReducer} from './reducers';

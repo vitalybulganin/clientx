@@ -8,10 +8,10 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/dev-server',
-        './src/index.js'
+        './client/src/index.js'
     ],
     output: {
-        publicPath: 'http://localhost:3000/',
+        publicPath: 'public/',
         path: __dirname + '/public',
         filename: 'bundle.js'
     },
@@ -49,6 +49,11 @@ module.exports = {
     },
     module: {
         loaders: [
+            {
+                test: /\.js|.jsx$/,
+                loader: "babel",
+                exclude: [/node_modules/, /public/]
+            },
             {
                 test: /\.js|.jsx$/,
                 exclude: /node_modules/,

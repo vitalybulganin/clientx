@@ -1,1 +1,0 @@
-export {SkillsReducer} from './reducers';

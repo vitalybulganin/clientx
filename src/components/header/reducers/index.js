@@ -1,1 +1,0 @@
-export HeaderReducer from './reducers';

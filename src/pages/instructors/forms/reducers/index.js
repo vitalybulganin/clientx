@@ -1,1 +1,0 @@
-export {InstructorFormReducer} from './reducers';

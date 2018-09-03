@@ -1,1 +1,0 @@
-export {PriceFormReducer} from './reducers';

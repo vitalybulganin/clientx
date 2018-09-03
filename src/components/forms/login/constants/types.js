@@ -1,5 +1,0 @@
-export const OPEN_LOGIN_FORM = 'OPEN_LOGIN_FORM';
-export const CLOSE_LOGIN_FORM = 'CLOSE_LOGIN_FORM';
-export const EDIT_LOGIN_FORM = 'EDIT_LOGIN_FORM';
-
-export const LOGIN_TO_SERVER = 'LOGIN_TO_SERVER';
