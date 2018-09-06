@@ -10,7 +10,7 @@ const {
     RatesDao,
     PriceplansDao,
     ClientsDao,
-    getInstructors, updateInstructor, addInstructor, deleteInstructor} = require('./dao');
+    IntructorsDao} = require('./dao');
 // Initialization of express application
 const app = express();
 // Creating a connection.
@@ -21,11 +21,13 @@ connection.connect(err => {
 });
 // Creating clients dao.
 const clients = new ClientsDao(connection);
+// Creating clients dao.
+const instructors = new IntructorsDao(connection);
 // Creating skills dao.
 const skills = new SkillsDao(connection);
-// Creating skills dao.
+// Creating rates dao.
 const rates = new RatesDao(connection);
-// Creating skills dao.
+// Creating priceplans dao.
 const prices = new PriceplansDao(connection);
 // Handling error events.
 connection.on(err => {
@@ -115,21 +117,23 @@ app.post('/api/deleteprice', (req, res) => {
 // RESTful api handlers, Instructors
 // ------------------------------------------------------------------------------------------------------------------ //
 app.get('/api/instructors', (req, res) => {
-    getInstructors().then(rows => res.type('application/json').send(rows)).catch(err => res.type('application/json').send(err));
+    console.log('get instructors.');
+    instructors.getInstructors().then(rows => res.type('application/json').send(rows)).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 app.post('/api/updateinstructor', (req, res) => {
+    console.log('update instructor.');
     // Getting a list of rows.
-    updateInstructor(req.body.instructor).then(instructor => {res.type('application/json').send(instructor);}).catch(err => {console.log(err); res.type('application/json').send(err);});
+    instructors.updateInstructor(req.body.instructor).then(instructor => {res.type('application/json').send(instructor);}).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 app.post('/api/addinstructor', (req, res) => {
-    console.log('add: ' + req.body);
+    console.log('add instructor.');
     // Getting a list of rows.
-    addInstructor(req.body.instructor).then(instructor => {res.type('application/json').send(instructor);}).catch(err => {console.log(err); res.type('application/json').send(err);});
+    instructors.addInstructor(req.body.instructor).then(instructor => {res.type('application/json').send(instructor);}).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 app.post('/api/deleteinstructor', (req, res) => {
     console.log('delete: ' + req.body);
     // Getting a list of rows.
-    deleteInstructor(req.body.instructor).then(instructor => {res.type('application/json').send(instructor);}).catch(err => {console.log(err); res.type('application/json').send(err);});
+    instructors.deleteInstructor(req.body.instructor).then(instructor => {res.type('application/json').send(instructor);}).catch(err => {console.log(err); res.type('application/json').send(err);});
 });
 // ------------------------------------------------------------------------------------------------------------------ //
 // RESTful api handlers, Clients

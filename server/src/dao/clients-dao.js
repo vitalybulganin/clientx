@@ -95,7 +95,7 @@ class ClientsDao
                         .catch(err => {throw (err);});
                     });
             })
-            // .then(() => {return this.close();})
+            .then(() => {return client;})
             .catch(err => {throw (err);});
     }
 
@@ -118,7 +118,7 @@ class ClientsDao
                             }).catch(err => {throw (err);});
                     }).catch(err => {throw (err);});
             })
-            // .then(() => {return this.close();})
+            .then(() => {return client;})
             .catch(err => {throw (err);});
     }
 
@@ -129,7 +129,9 @@ class ClientsDao
                 return this.db.query('DELETE FROM swschool.profiles WHERE id = ?;', client.profileId)
                     .then(() => {
                         return this.db.query('DELETE FROM swschool.clients WHERE id = ?;', client.id).catch(err => {throw (err);});
-                    }).catch(err => {throw (err);});
+                    })
+                    .then(() => {return client;})
+                    .catch(err => {throw (err);});
             })
             .catch(err => {throw (err);});
     }
