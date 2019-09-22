@@ -1,3 +1,4 @@
 .idea
-clientx.iml
+node_modules
+*.iml
 public/bundle.js

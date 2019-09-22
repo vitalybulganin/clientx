@@ -1,4 +1,0 @@
-{
-	"presets": ["react", "es2015", "stage-0"], // поддержка ES2015, ES7 и JSX
-	"plugins": ["transform-es2015-arrow-functions"]
-}
